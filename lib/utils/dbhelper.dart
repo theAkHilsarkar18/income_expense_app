@@ -54,4 +54,15 @@ class dbHelper {
     });
 
   }
+
+  // read data
+
+  Future<List<Map>> readData()
+  async {
+    database = await checkDB();
+    String sql = "SELECT * FROM incomeexpense";
+    List<Map> list = await database!.rawQuery(sql);
+    return list;
+  }
+
 }
