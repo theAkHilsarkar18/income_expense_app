@@ -8,6 +8,7 @@ import 'package:income_expense_app/utils/dbhelper.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../insertscreen/controller/insertcontroller.dart';
+import '../../transactionscreen/controller/transaction_controller.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({Key? key}) : super(key: key);
@@ -20,6 +21,7 @@ class _HomescreenState extends State<Homescreen> {
 
   InsertController insertController = Get.put(InsertController());
   HomeController homeController = Get.put(HomeController());
+  TransactionController transactionController = Get.put(TransactionController());
 
   @override
   void initState() {
@@ -27,7 +29,8 @@ class _HomescreenState extends State<Homescreen> {
     super.initState();
     DatabaseHelper databaseHelper = DatabaseHelper();
     databaseHelper.checkDatabase();
-    databaseHelper.insertDatabase(category: 'food', note: 'note', date: '10-02-23', time: '9-00', status: '0');
+    transactionController.readTransaction();
+    print("${transactionController.transactionList.length}==============");
   }
   @override
   Widget build(BuildContext context) {
@@ -253,17 +256,23 @@ class _HomescreenState extends State<Homescreen> {
                     child: Obx(
                       () => ListView.builder(
                           physics: BouncingScrollPhysics(),
-                          itemBuilder: (context, index) => transactionBox(
-                            insertController.transactionList[index].category!,
-                            insertController.transactionList[index].note!,
-                            insertController.transactionList[index].date!,
-                            insertController.transactionList[index].time!,
-                            insertController.transactionList[index].amount!,
-                            insertController.transactionList[index].i1!,
-                            insertController.transactionList[index].c1!,
-                            insertController.transactionList[index].status!,
+                          itemBuilder: (context, index) => InkWell(
+                            onDoubleTap: () {
+                              int id = transactionController.transactionList[index]['id'];
+                              transactionController.deleteTransaction(id);
+                            },
+                            child: transactionBox(
+                              transactionController.transactionList[index]['category'],
+                              transactionController.transactionList[index]['note'],
+                              transactionController.transactionList[index]['date'],
+                              transactionController.transactionList[index]['time'],
+                              transactionController.transactionList[index]['amount'],
+                              insertController.transactionList[index].i1!,
+                              insertController.transactionList[index].c1!,
+                              transactionController.transactionList[index]['status'],
+                            ),
                           ),
-                          itemCount: insertController.transactionList.length),
+                          itemCount: transactionController.transactionList.length),
                     ),
                   ),
                 ],
@@ -342,7 +351,7 @@ class _HomescreenState extends State<Homescreen> {
   }
 
   // transaction box
-  Widget transactionBox(String category,String note,String date,String time,String amount,Icon i1,Color c1,bool b1) {
+  Widget transactionBox(String category,String note,String date,String time,String amount,Icon i1,Color c1,int b1) {
     return Container(
       height: 11.h,
       width: MediaQuery.of(context).size.width,
@@ -391,7 +400,7 @@ class _HomescreenState extends State<Homescreen> {
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              b1?Text('\$ ${amount}',
+              b1==1?Text('\$ ${amount}',
                   style: GoogleFonts.overpass(
                       color: Colors.green,
                       fontSize: 10.sp,

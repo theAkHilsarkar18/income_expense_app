@@ -77,4 +77,7 @@ class InsertController extends GetxController
   RxList<InsertModel> transactionList = <InsertModel>[].obs;
 
 
+
+
+
 }

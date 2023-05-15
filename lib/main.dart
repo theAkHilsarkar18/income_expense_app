@@ -13,7 +13,7 @@ void main()
       builder: (context, orientation, deviceType) =>  GetMaterialApp(
         debugShowCheckedModeBanner: false,
         getPages: [
-          GetPage(name: '/',page: () => Homescreen(),transition: Transition.downToUp,),
+          GetPage(name: '/',page: () => Homescreen(),transition: Transition.downToUp, ),
           GetPage(name: '/insert',page: () => Insertscreen(),transition: Transition.downToUp),
           GetPage(name: '/transaction',page: () => TransactionScreen(),transition: Transition.downToUp),
           GetPage(name: '/graph',page: () => Graphscreen(),transition: Transition.downToUp),

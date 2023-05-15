@@ -19,6 +19,8 @@ class _InsertscreenState extends State<Insertscreen> {
   InsertController insertController = Get.put(InsertController());
   HomeController homeController = Get.put(HomeController());
   TransactionController transactionController = Get.put(TransactionController());
+
+
   TextEditingController txtAmount = TextEditingController(text: '2000');
   TextEditingController txtNote = TextEditingController();
   TextEditingController txtCategory = TextEditingController();
@@ -28,6 +30,13 @@ class _InsertscreenState extends State<Insertscreen> {
   TextEditingController txtTime = TextEditingController(
       text:
       '${TimeOfDay.now().hour} : ${TimeOfDay.now().minute} ${TimeOfDay.now().hour >= 0 && TimeOfDay.now().hour <= 12 ? 'AM' : 'PM'}');
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    transactionController.readTransaction();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -318,6 +327,8 @@ class _InsertscreenState extends State<Insertscreen> {
                     Color c1 = insertController.categoryColorList[insertController.categoryIndex.value];
                     InsertModel insertmodel = InsertModel(category: category,amount: amount,c1: c1,date: date,i1: i1,status: insertController.status.value,time: time,note: note);
                     insertController.transactionList.add(insertmodel);
+                    DatabaseHelper databaseHelper = DatabaseHelper();
+                    databaseHelper.insertDatabase(category: category, note: note, date: date, time: time, status: insertController.status.value==true?1:0, amount: amount);
                     if(insertController.status.isTrue)
                       {
                         homeController.totalBalance.value = homeController.totalBalance.value + amt;
@@ -332,6 +343,7 @@ class _InsertscreenState extends State<Insertscreen> {
                       }
                     insertController.categorySelected.value = false;
                     insertController.categoryIndex.value = 0;
+                    transactionController.readTransaction();
                     ////////////////// Database insert //////////////////////
                     // DatabaseHelper databaseHelper = DatabaseHelper();
                     // databaseHelper.insertDatabase(category: category, note: note, date: date, time: time, status: 0);

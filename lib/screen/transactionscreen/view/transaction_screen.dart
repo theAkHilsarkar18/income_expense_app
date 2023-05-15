@@ -79,82 +79,82 @@ class _TransactionScreenState extends State<TransactionScreen> {
                           () => ListView.builder(
                               physics: BouncingScrollPhysics(),
                               itemBuilder: (context, index) {
-                                if (insertController
-                                        .transactionList[index].status ==
-                                    true) {
-                                  return transactionBox(
-                                    insertController
-                                        .transactionList[index].category!,
-                                    insertController
-                                        .transactionList[index].note!,
-                                    insertController
-                                        .transactionList[index].date!,
-                                    insertController
-                                        .transactionList[index].time!,
-                                    insertController
-                                        .transactionList[index].amount!,
-                                    insertController.transactionList[index].i1!,
-                                    insertController.transactionList[index].c1!,
-                                    insertController
-                                        .transactionList[index].status!,
+                                if (transactionController
+                                        .transactionList[index]['status'] ==
+                                    1) {
+                                  return InkWell(
+                                    onDoubleTap: () {
+                                      int id = transactionController.transactionList[index]['id'];
+                                      transactionController.deleteTransaction(id);
+                                    },
+                                    child: transactionBox(
+                                      transactionController.transactionList[index]['category'],
+                                      transactionController.transactionList[index]['note'],
+                                      transactionController.transactionList[index]['date'],
+                                      transactionController.transactionList[index]['time'],
+                                      transactionController.transactionList[index]['amount'],
+                                      insertController.categoryIconList[index],
+                                      insertController.categoryColorList[index],
+                                      transactionController.transactionList[index]['status'],
+                                    ),
                                   );
                                 }
                                 return Container();
                               },
                               itemCount:
-                                  insertController.transactionList.length),
+                                  transactionController.transactionList.length),
                         )
                       : transactionController.fliter.value==0?Obx(
                         () => ListView.builder(
                         physics: BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
-                          if (insertController
-                              .transactionList[index].status ==
-                              false) {
-                            return transactionBox(
-                              insertController
-                                  .transactionList[index].category!,
-                              insertController
-                                  .transactionList[index].note!,
-                              insertController
-                                  .transactionList[index].date!,
-                              insertController
-                                  .transactionList[index].time!,
-                              insertController
-                                  .transactionList[index].amount!,
-                              insertController.transactionList[index].i1!,
-                              insertController.transactionList[index].c1!,
-                              insertController
-                                  .transactionList[index].status!,
+                          if (transactionController
+                              .transactionList[index]['status'] ==
+                              0) {
+                            return InkWell(
+                              onDoubleTap: () {
+                                int id = transactionController.transactionList[index]['id'];
+                                transactionController.deleteTransaction(id);
+                              },
+                              child: transactionBox(
+                                transactionController.transactionList[index]['category'],
+                                transactionController.transactionList[index]['note'],
+                                transactionController.transactionList[index]['date'],
+                                transactionController.transactionList[index]['time'],
+                                transactionController.transactionList[index]['amount'],
+                                insertController.categoryIconList[index],
+                                insertController.categoryColorList[index],
+                                transactionController.transactionList[index]['status'],
+                              ),
                             );
                           }
                           return Container();
                         },
                         itemCount:
-                        insertController.transactionList.length),
+                        transactionController.transactionList.length),
                   ):Obx(
                         () => ListView.builder(
                         physics: BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
-                          return transactionBox(
-                            insertController
-                                .transactionList[index].category!,
-                            insertController
-                                .transactionList[index].note!,
-                            insertController
-                                .transactionList[index].date!,
-                            insertController
-                                .transactionList[index].time!,
-                            insertController
-                                .transactionList[index].amount!,
-                            insertController.transactionList[index].i1!,
-                            insertController.transactionList[index].c1!,
-                            insertController
-                                .transactionList[index].status!,
+                          return InkWell(
+                            onDoubleTap: () {
+                              int id = transactionController.transactionList[index]['id'];
+                              transactionController.deleteTransaction(id);
+                            },
+                            child: transactionBox(
+                              transactionController.transactionList[index]['category'],
+                              transactionController.transactionList[index]['note'],
+                              transactionController.transactionList[index]['date'],
+                              transactionController.transactionList[index]['time'],
+                              transactionController.transactionList[index]['amount'],
+                              insertController.categoryIconList[index],
+                              insertController.categoryColorList[index],
+                              transactionController.transactionList[index]['status'],
+                            ),
                           );
                         },
                         itemCount:
-                        insertController.transactionList.length),
+                        transactionController.transactionList.length),
                   ),
                 ),
               ),
@@ -267,7 +267,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
   }
 
   Widget transactionBox(String category, String note, String date, String time,
-      String amount, Icon i1, Color c1, bool b1) {
+      String amount, Icon i1, Color c1, int b1) {
     return Container(
       height: 11.h,
       width: MediaQuery.of(context).size.width,
@@ -316,7 +316,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              b1
+              b1==1
                   ? Text('-\$ ${amount}',
                       style: GoogleFonts.overpass(
                           color: Colors.green,
