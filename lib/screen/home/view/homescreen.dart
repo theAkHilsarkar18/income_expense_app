@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -30,10 +32,13 @@ class _HomescreenState extends State<Homescreen> {
     DatabaseHelper databaseHelper = DatabaseHelper();
     databaseHelper.checkDatabase();
     transactionController.readTransaction();
-    print("${transactionController.transactionList.length}==============");
+    print("${transactionController.transactionList.length}======initstate========");
   }
   @override
   Widget build(BuildContext context) {
+    Timer(Duration(seconds: 3), () {
+      //homeController.balaceUpdate();
+    });
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xffEDE9F0),
@@ -269,7 +274,11 @@ class _HomescreenState extends State<Homescreen> {
                               transactionController.transactionList[index]['amount'],
                               insertController.transactionList[index].i1!,
                               insertController.transactionList[index].c1!,
+                              // insertController.categoryIconList[index],
+                              // insertController.categoryColorList[index],
                               transactionController.transactionList[index]['status'],
+                              //insertController.transactionList[index].paytype!,
+                              transactionController.transactionList[index]['paytype'],
                             ),
                           ),
                           itemCount: transactionController.transactionList.length),
@@ -351,7 +360,7 @@ class _HomescreenState extends State<Homescreen> {
   }
 
   // transaction box
-  Widget transactionBox(String category,String note,String date,String time,String amount,Icon i1,Color c1,int b1) {
+  Widget transactionBox(String category,String note,String date,String time,String amount,Icon i1,Color c1,int b1,String paytype) {
     return Container(
       height: 11.h,
       width: MediaQuery.of(context).size.width,
@@ -378,14 +387,20 @@ class _HomescreenState extends State<Homescreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                  width: 22.w,
-                  child: Text('${category}',
-                      style: GoogleFonts.poppins(
-                        color: Color(0xff31435b),
-                        fontWeight: FontWeight.w500,
-                        fontSize: 10.sp,
-                      ))),
+              Row(
+                children: [
+                  Container(
+                      width: 22.w,
+                      child: Text('${category}',
+                          style: GoogleFonts.poppins(
+                            color: Color(0xff31435b),
+                            fontWeight: FontWeight.w500,
+                            fontSize: 10.sp,
+                          ))),
+                  SizedBox(width: 2.w,),
+                  Text('$paytype',style: TextStyle(color: c1,fontSize: 7.sp)),
+                ]
+              ),
               Text('${note}',
                   style: GoogleFonts.poppins(
                     color: Colors.grey,

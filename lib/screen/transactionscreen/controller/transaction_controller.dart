@@ -27,4 +27,25 @@ class TransactionController extends GetxController
     print('--------------');
   }
 
+  // decending data base
+  Future<void> readDecending()
+  async {
+    DatabaseHelper databaseHelper = DatabaseHelper();
+    transactionList.value = await databaseHelper.decendingDatabase();
+  }
+  // acending
+  Future<void> readAcending()
+  async {
+    DatabaseHelper databaseHelper = DatabaseHelper();
+    transactionList.value = await databaseHelper.acendingDatabase();
+  }
+
+  // income expense filter
+
+  Future<void> readIncomeExpense(int status)
+  async {
+    DatabaseHelper databaseHelper = DatabaseHelper();
+    transactionList.value = await databaseHelper.incomeExpenseFilter(s1: status);
+  }
+
 }

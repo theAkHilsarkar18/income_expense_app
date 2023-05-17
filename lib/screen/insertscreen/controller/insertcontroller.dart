@@ -76,8 +76,23 @@ class InsertController extends GetxController
   // transaction list
   RxList<InsertModel> transactionList = <InsertModel>[].obs;
 
+  // payment type
+  RxInt paytypeIndex = 0.obs;
+  RxBool paytypeSelected = false.obs;
 
+  List paytypeNameList = [
+    'Cash',
+    'GPay',
+    'Bank Transfer',
+    'Cheque',
+  ].obs;
 
+  List paytypeIconList = [
+    Icon(Icons.payments_outlined,color: Colors.white,size: 25.sp),
+    Icon(Icons.g_mobiledata,color: Colors.white,size: 25.sp),
+    Icon(Icons.account_balance,color: Colors.white,size: 25.sp),
+    Icon(Icons.money,color: Colors.white,size: 25.sp),
+  ].obs;
 
 
 }

@@ -236,6 +236,81 @@ class _InsertscreenState extends State<Insertscreen> {
                   ),
                 ),
 
+                // PAYMENT TYPE
+                InkWell(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadiusDirectional.circular(20)),
+                      builder: (context) {
+                        return GridView.builder(
+                          shrinkWrap: true,
+                          physics: BouncingScrollPhysics(),
+                          padding: EdgeInsets.all(20),
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,mainAxisSpacing: 10,crossAxisSpacing: 10),
+                          itemBuilder: (context, index) => InkWell(
+                            onTap: () {
+                              insertController.paytypeIndex.value = index;
+                              insertController.paytypeSelected.value = true;
+                              Get.back();
+                            },
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                CircleAvatar(
+                                  radius: 30.sp,
+                                  backgroundColor: insertController.categoryColorList[index],
+                                  child: insertController.paytypeIconList[index],
+                                ),
+                                SizedBox(height: 1.h,),
+                                Text('${insertController.paytypeNameList[index]}',style: GoogleFonts.poppins(fontSize: 9.sp)),
+                              ],
+                            ),
+                          ),
+                          itemCount: insertController.paytypeIconList.length,
+                        );
+                      },
+                    );
+                  },
+                  child: Container(
+                    margin:
+                    EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+                    padding: EdgeInsets.all(5),
+                    height: 8.h,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 2.w,
+                        ),
+                        Icon(
+                          Icons.currency_exchange,
+                          color: Colors.blueGrey,
+                        ),
+                        SizedBox(
+                          width: 4.w,
+                        ),
+                        Obx(
+                              () => Text(
+                            insertController.paytypeSelected.isFalse?'Payment Type':'${insertController.paytypeNameList[insertController.paytypeIndex.value]}',
+                            style: GoogleFonts.poppins(
+                                color: Colors.blueGrey.shade300,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12.sp,
+                                letterSpacing: 1),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+
                 // today / date
                 Container(
                   margin: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
@@ -312,23 +387,27 @@ class _InsertscreenState extends State<Insertscreen> {
                   ),
                 ),
 
-                SizedBox(height: 12.h,),
+
+
+                SizedBox(height: 5.h,),
 
                 // SAVE BOX
                 InkWell(
                   onTap: () {
                     String category = insertController.categoryNameList[insertController.categoryIndex.value];
+                    String paytype = insertController.paytypeNameList[insertController.paytypeIndex.value];
                     String note = txtNote.text;
                     String date = txtDate.text;
                     String time = txtTime.text;
                     String amount = txtAmount.text;
                     int amt = int.parse(amount);
                     Icon i1 = insertController.categoryIconList[insertController.categoryIndex.value];
+                    Icon i2 = insertController.paytypeIconList[insertController.paytypeIndex.value];
                     Color c1 = insertController.categoryColorList[insertController.categoryIndex.value];
-                    InsertModel insertmodel = InsertModel(category: category,amount: amount,c1: c1,date: date,i1: i1,status: insertController.status.value,time: time,note: note);
+                    InsertModel insertmodel = InsertModel(category: category,amount: amount,c1: c1,date: date,i1: i1,status: insertController.status.value,time: time,note: note,paytype: paytype,i2: i2);
                     insertController.transactionList.add(insertmodel);
                     DatabaseHelper databaseHelper = DatabaseHelper();
-                    databaseHelper.insertDatabase(category: category, note: note, date: date, time: time, status: insertController.status.value==true?1:0, amount: amount);
+                    databaseHelper.insertDatabase(category: category, note: note, date: date, time: time, status: insertController.status.value==true?1:0, amount: amount,paytype: paytype);
                     if(insertController.status.isTrue)
                       {
                         homeController.totalBalance.value = homeController.totalBalance.value + amt;
