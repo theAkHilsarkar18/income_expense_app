@@ -26,11 +26,10 @@ class _TransactionScreenState extends State<TransactionScreen> {
   TextEditingController txtCategory = TextEditingController();
   TextEditingController txtDate = TextEditingController(
       text:
-      '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}');
+          '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}');
   TextEditingController txtTime = TextEditingController(
       text:
-      '${TimeOfDay.now().hour} : ${TimeOfDay.now().minute} ${TimeOfDay.now().hour >= 0 && TimeOfDay.now().hour <= 12 ? 'AM' : 'PM'}');
-
+          '${TimeOfDay.now().hour} : ${TimeOfDay.now().minute} ${TimeOfDay.now().hour >= 0 && TimeOfDay.now().hour <= 12 ? 'AM' : 'PM'}');
 
   @override
   void initState() {
@@ -66,177 +65,338 @@ class _TransactionScreenState extends State<TransactionScreen> {
                     ),
                   ),
                   Spacer(),
-                  SizedBox(width: 15,),
-                  InkWell(onTap: () {
-                    showModalBottomSheet(context: context,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadiusDirectional.circular(20)),
-                      builder: (context) => Container(
-                        height: 200,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  transactionController.readTransaction();
-                                  Get.back();
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(left: 20,top: 10,bottom: 10,right: 20),
-                                  margin: EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
-                                    border: Border.all(color:  Color(0xff31435b),width: 2)
-                                  ),
-                                  child: Text(
-                                    'View All',
-                                    style: GoogleFonts.poppins(
-                                      color: Color(0xff31435b),
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 11.sp,
+                  SizedBox(
+                    width: 15,
+                  ),
+                  InkWell(
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadiusDirectional.circular(20)),
+                          builder: (context) => Container(
+                            height: 200,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        transactionController.readTransaction();
+                                        Get.back();
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.only(
+                                            left: 20,
+                                            top: 10,
+                                            bottom: 10,
+                                            right: 20),
+                                        margin: EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(50),
+                                            border: Border.all(
+                                                color: Color(0xff31435b),
+                                                width: 2)),
+                                        child: Text(
+                                          'View All',
+                                          style: GoogleFonts.poppins(
+                                            color: Color(0xff31435b),
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 11.sp,
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  transactionController.readIncomeExpense(1);
-                                  Get.back();
-
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(left: 20,top: 10,bottom: 10,right: 20),
-                                  margin: EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
-                                    border: Border.all(color:  Color(0xff31435b),width: 2)
-                                  ),
-                                  child: Text(
-                                    'Income',
-                                    style: GoogleFonts.poppins(
-                                      color: Colors.green,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 11.sp,
+                                    InkWell(
+                                      onTap: () {
+                                        transactionController
+                                            .readIncomeExpense(1);
+                                        Get.back();
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.only(
+                                            left: 20,
+                                            top: 10,
+                                            bottom: 10,
+                                            right: 20),
+                                        margin: EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(50),
+                                            border: Border.all(
+                                                color: Color(0xff31435b),
+                                                width: 2)),
+                                        child: Text(
+                                          'Income',
+                                          style: GoogleFonts.poppins(
+                                            color: Colors.green,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 11.sp,
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  transactionController.readIncomeExpense(0);
-                                  Get.back();
-
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(left: 20,top: 10,bottom: 10,right: 20),
-                                  margin: EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
-                                    border: Border.all(color:  Color(0xff31435b),width: 2)
-                                  ),
-                                  child: Text(
-                                    'Expense',
-                                    style: GoogleFonts.poppins(
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 11.sp,
+                                    InkWell(
+                                      onTap: () {
+                                        transactionController
+                                            .readIncomeExpense(0);
+                                        Get.back();
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.only(
+                                            left: 20,
+                                            top: 10,
+                                            bottom: 10,
+                                            right: 20),
+                                        margin: EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(50),
+                                            border: Border.all(
+                                                color: Color(0xff31435b),
+                                                width: 2)),
+                                        child: Text(
+                                          'Expense',
+                                          style: GoogleFonts.poppins(
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 11.sp,
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                              ),
-                            ],
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        transactionController.readAcending();
+                                        Get.back();
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.only(
+                                            left: 20,
+                                            top: 10,
+                                            bottom: 10,
+                                            right: 20),
+                                        margin: EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(50),
+                                            border: Border.all(
+                                                color: Color(0xff31435b),
+                                                width: 2)),
+                                        child: Text(
+                                          'Acending',
+                                          style: GoogleFonts.poppins(
+                                            color: Colors.green,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 11.sp,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        transactionController.readDecending();
+                                        Get.back();
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.only(
+                                            left: 20,
+                                            top: 10,
+                                            bottom: 10,
+                                            right: 20),
+                                        margin: EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(50),
+                                            border: Border.all(
+                                                color: Color(0xff31435b),
+                                                width: 2)),
+                                        child: Text(
+                                          'Decending',
+                                          style: GoogleFonts.poppins(
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 11.sp,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    InkWell(
+                                      onTap: () async {
+                                        DateTime? pickedDate = await showDatePicker(
+                                          context: context,
+                                          initialDate: DateTime.now(),
+                                          firstDate: DateTime(2000),
+                                          lastDate: DateTime(2030),
+                                        );
+                                        print(pickedDate);
+                                        transactionController.startDate.value = pickedDate;
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(5),
+                                        width: 110,
+                                        margin: EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(50),
+                                            border: Border.all(
+                                                color: Color(0xff31435b),
+                                                width: 2)),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Icon(Icons.calendar_today),
+                                            ),
+                                            Text(
+                                              'From',
+                                              style: GoogleFonts.poppins(
+                                                color: Color(0xff31435b),
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 12.sp,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () async {
+                                        DateTime? pickedDate = await showDatePicker(
+                                          context: context,
+                                          initialDate: DateTime.now(),
+                                          firstDate: DateTime(2000),
+                                          lastDate: DateTime(2030),
+                                        );
+                                        print(pickedDate);
+                                        transactionController.endDate.value = pickedDate;
+                                        String start = '${transactionController.startDate.value!.day}/${transactionController.startDate.value!.month}/${transactionController.startDate.value!.day}';
+                                        String end = '${pickedDate!.day}/${pickedDate.month}/${pickedDate.year}';
+                                        print('${start}  ${end}');
+                                        transactionController.masterFilter(start, end);
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(5),
+                                        width: 100,
+                                        margin: EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(50),
+                                            border: Border.all(
+                                                color: Color(0xff31435b),
+                                                width: 2)),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Icon(Icons.calendar_month_sharp),
+                                            ),
+                                            Text(
+                                              'To',
+                                              style: GoogleFonts.poppins(
+                                                color: Color(0xff31435b),
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 12.sp,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  transactionController.readAcending();
-                                  Get.back();
-
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(left: 20,top: 10,bottom: 10,right: 20),
-                                  margin: EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      border: Border.all(color:  Color(0xff31435b),width: 2)
-                                  ),
-                                  child: Text(
-                                    'Acending',
-                                    style: GoogleFonts.poppins(
-                                      color: Colors.green,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 11.sp,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  transactionController.readDecending();
-                                  Get.back();
-
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(left: 20,top: 10,bottom: 10,right: 20),
-                                  margin: EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      border: Border.all(color:  Color(0xff31435b),width: 2)
-                                  ),
-                                  child: Text(
-                                    'Decending',
-                                    style: GoogleFonts.poppins(
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 11.sp,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                    ),
-                      ),);
-                  },child: Icon(Icons.rule,color: Color(0xff31435b))),
-                  SizedBox(width: 5,),
-
+                        );
+                      },
+                      child: Icon(Icons.rule, color: Color(0xff31435b))),
+                  SizedBox(
+                    width: 5,
+                  ),
                 ],
               ),
             ),
+
+            // all transacation controller listview
             Expanded(
-              child: Obx(
-                () => Container(
-                  margin: EdgeInsets.only(top: 50),
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                      //color: Colors.black12,
-                      ),
-                  child: ListView.builder(
+              child: Container(
+                margin: EdgeInsets.only(top: 50),
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                    //color: Colors.black12,
+                    ),
+                child: Obx(
+                  () => ListView.builder(
                       physics: BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
                         return InkWell(
-                          onLongPress: () {
+                          onTap: () {
+                            int status = transactionController
+                                .transactionList[index]['status'];
+                            if (status == 1) {
+                              insertController.isChanged.value = true;
+                            } else {
+                              insertController.isChanged.value = false;
+                            }
+                            txtAmount = TextEditingController(
+                                text:
+                                    '${transactionController.transactionList[index]['amount']}');
+                            txtDate = TextEditingController(
+                                text:
+                                    '${transactionController.transactionList[index]['date']}');
+                            txtTime = TextEditingController(
+                                text:
+                                    '${transactionController.transactionList[index]['time']}');
+                            txtNote = TextEditingController(
+                                text:
+                                    '${transactionController.transactionList[index]['note']}');
                             Get.defaultDialog(
                               title: 'Update',
                               content: SingleChildScrollView(
                                 child: Column(
                                   children: [
+                                    // close button
                                     Row(
                                       children: [
                                         Spacer(),
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
-                                          child: InkWell(onTap: () {
-                                            insertController.categorySelected.value = false;
-                                            insertController.categoryIndex.value = 0;
-                                            Get.back();
-                                          },child: Icon(Icons.close,color: Colors.blueGrey)),
+                                          child: InkWell(
+                                              onTap: () {
+                                                insertController
+                                                    .categorySelected
+                                                    .value = false;
+                                                insertController
+                                                    .categoryIndex.value = 0;
+                                                Get.back();
+                                              },
+                                              child: Icon(Icons.close,
+                                                  color: Colors.blueGrey)),
                                         ),
                                       ],
                                     ),
@@ -253,13 +413,15 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                         children: [
                                           InkWell(
                                               onTap: () {
-                                                insertController.status.value = true;
+                                                insertController.status.value =
+                                                    true;
                                                 insertController.changeBox();
                                               },
                                               child: incomeBox()),
                                           InkWell(
                                               onTap: () {
-                                                insertController.status.value = false;
+                                                insertController.status.value =
+                                                    false;
                                                 insertController.changeBox();
                                               },
                                               child: expenseBox()),
@@ -268,8 +430,11 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                     ),
                                     // enter amount
                                     Container(
-
-                                      padding: EdgeInsets.only(left: 20,right: 20,bottom: 5,top: 5),
+                                      padding: EdgeInsets.only(
+                                          left: 20,
+                                          right: 20,
+                                          bottom: 5,
+                                          top: 5),
                                       height: 7.h,
                                       width: 60.w,
                                       decoration: BoxDecoration(
@@ -293,9 +458,11 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                             size: 20.sp,
                                           ),
                                           hintText: '1000',
-                                          hintStyle:
-                                          GoogleFonts.poppins(fontSize: 12.sp, letterSpacing: 1),
-                                          border: UnderlineInputBorder(borderSide: BorderSide.none),
+                                          hintStyle: GoogleFonts.poppins(
+                                              fontSize: 12.sp,
+                                              letterSpacing: 1),
+                                          border: UnderlineInputBorder(
+                                              borderSide: BorderSide.none),
                                         ),
                                       ),
                                     ),
@@ -305,29 +472,51 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                         showModalBottomSheet(
                                           context: context,
                                           shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadiusDirectional.circular(20)),
+                                              borderRadius:
+                                                  BorderRadiusDirectional
+                                                      .circular(20)),
                                           builder: (context) {
                                             return GridView.builder(
                                               physics: BouncingScrollPhysics(),
                                               padding: EdgeInsets.all(20),
-                                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 3,mainAxisSpacing: 20,crossAxisSpacing: 20),
-                                              itemBuilder: (context, index) => InkWell(
+                                              gridDelegate:
+                                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                                      crossAxisCount: 3,
+                                                      mainAxisSpacing: 20,
+                                                      crossAxisSpacing: 20),
+                                              itemBuilder: (context, index) =>
+                                                  InkWell(
                                                 onTap: () {
-                                                  insertController.categoryIndex.value = index;
-                                                  insertController.categorySelected.value = true;
+                                                  insertController.categoryIndex
+                                                      .value = index;
+                                                  insertController
+                                                      .categorySelected
+                                                      .value = true;
                                                   Get.back();
                                                 },
                                                 child: Column(
-                                                  mainAxisSize: MainAxisSize.min,
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
                                                   children: [
                                                     CircleAvatar(
                                                       radius: 22.sp,
-                                                      backgroundColor: insertController.categoryColorList[index],
-                                                      child: insertController.categoryIconList[index],
+                                                      backgroundColor:
+                                                          insertController
+                                                                  .categoryColorList[
+                                                              index],
+                                                      child: insertController
+                                                              .categoryIconList[
+                                                          index],
                                                     ),
-                                                    SizedBox(height: 1.h,),
-                                                    Text('${insertController.categoryNameList[index]}',style: GoogleFonts.poppins(fontSize: 9.sp)),
+                                                    SizedBox(
+                                                      height: 1.h,
+                                                    ),
+                                                    Text(
+                                                        '${insertController.categoryNameList[index]}',
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                                fontSize:
+                                                                    9.sp)),
                                                   ],
                                                 ),
                                               ),
@@ -337,14 +526,19 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                         );
                                       },
                                       child: Container(
-                                        margin:
-                                        EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
+                                        margin: EdgeInsets.only(
+                                            left: 20,
+                                            right: 20,
+                                            top: 5,
+                                            bottom: 5),
                                         padding: EdgeInsets.all(5),
                                         height: 8.h,
-                                        width: MediaQuery.of(context).size.width,
+                                        width:
+                                            MediaQuery.of(context).size.width,
                                         decoration: BoxDecoration(
                                           color: Colors.white,
-                                          borderRadius: BorderRadius.circular(20),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
                                         ),
                                         child: Row(
                                           children: [
@@ -359,10 +553,15 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                               width: 4.w,
                                             ),
                                             Obx(
-                                                  () => Text(
-                                                insertController.categorySelected.isFalse?'Category':'${insertController.categoryNameList[insertController.categoryIndex.value]}',
+                                              () => Text(
+                                                insertController
+                                                        .categorySelected
+                                                        .isFalse
+                                                    ? 'Category'
+                                                    : '${insertController.categoryNameList[insertController.categoryIndex.value]}',
                                                 style: GoogleFonts.poppins(
-                                                    color: Colors.blueGrey.shade300,
+                                                    color: Colors
+                                                        .blueGrey.shade300,
                                                     fontWeight: FontWeight.w500,
                                                     fontSize: 12.sp,
                                                     letterSpacing: 1),
@@ -375,7 +574,11 @@ class _TransactionScreenState extends State<TransactionScreen> {
 
                                     // note by enter value
                                     Container(
-                                      margin: EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
+                                      margin: EdgeInsets.only(
+                                          left: 20,
+                                          right: 20,
+                                          top: 5,
+                                          bottom: 5),
                                       padding: EdgeInsets.all(5),
                                       height: 8.h,
                                       width: MediaQuery.of(context).size.width,
@@ -386,7 +589,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                       alignment: Alignment.center,
                                       child: TextField(
                                         controller: txtNote,
-                                        textAlignVertical: TextAlignVertical.top,
+                                        textAlignVertical:
+                                            TextAlignVertical.top,
                                         cursorColor: Colors.blueGrey,
                                         style: GoogleFonts.poppins(
                                             color: Colors.blueGrey.shade300,
@@ -405,7 +609,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                               fontWeight: FontWeight.w500,
                                               fontSize: 13.sp,
                                               letterSpacing: 1),
-                                          border: UnderlineInputBorder(borderSide: BorderSide.none),
+                                          border: UnderlineInputBorder(
+                                              borderSide: BorderSide.none),
                                         ),
                                       ),
                                     ),
@@ -416,47 +621,75 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                         showModalBottomSheet(
                                           context: context,
                                           shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadiusDirectional.circular(20)),
+                                              borderRadius:
+                                                  BorderRadiusDirectional
+                                                      .circular(20)),
                                           builder: (context) {
                                             return GridView.builder(
                                               shrinkWrap: true,
                                               physics: BouncingScrollPhysics(),
                                               padding: EdgeInsets.all(20),
-                                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 2,mainAxisSpacing: 10,crossAxisSpacing: 10),
-                                              itemBuilder: (context, index) => InkWell(
+                                              gridDelegate:
+                                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                                      crossAxisCount: 2,
+                                                      mainAxisSpacing: 10,
+                                                      crossAxisSpacing: 10),
+                                              itemBuilder: (context, index) =>
+                                                  InkWell(
                                                 onTap: () {
-                                                  insertController.paytypeIndex.value = index;
-                                                  insertController.paytypeSelected.value = true;
+                                                  insertController.paytypeIndex
+                                                      .value = index;
+                                                  insertController
+                                                      .paytypeSelected
+                                                      .value = true;
                                                   Get.back();
                                                 },
                                                 child: Column(
-                                                  mainAxisSize: MainAxisSize.min,
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
                                                   children: [
                                                     CircleAvatar(
                                                       radius: 30.sp,
-                                                      backgroundColor: insertController.categoryColorList[index],
-                                                      child: insertController.paytypeIconList[index],
+                                                      backgroundColor:
+                                                          insertController
+                                                                  .categoryColorList[
+                                                              index],
+                                                      child: insertController
+                                                              .paytypeIconList[
+                                                          index],
                                                     ),
-                                                    SizedBox(height: 1.h,),
-                                                    Text('${insertController.paytypeNameList[index]}',style: GoogleFonts.poppins(fontSize: 9.sp)),
+                                                    SizedBox(
+                                                      height: 1.h,
+                                                    ),
+                                                    Text(
+                                                        '${insertController.paytypeNameList[index]}',
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                                fontSize:
+                                                                    9.sp)),
                                                   ],
                                                 ),
                                               ),
-                                              itemCount: insertController.paytypeIconList.length,
+                                              itemCount: insertController
+                                                  .paytypeIconList.length,
                                             );
                                           },
                                         );
                                       },
                                       child: Container(
-                                        margin:
-                                        EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
+                                        margin: EdgeInsets.only(
+                                            left: 20,
+                                            right: 20,
+                                            top: 5,
+                                            bottom: 5),
                                         padding: EdgeInsets.all(5),
                                         height: 7.h,
-                                        width: MediaQuery.of(context).size.width,
+                                        width:
+                                            MediaQuery.of(context).size.width,
                                         decoration: BoxDecoration(
                                           color: Colors.white,
-                                          borderRadius: BorderRadius.circular(20),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
                                         ),
                                         child: Row(
                                           children: [
@@ -471,10 +704,14 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                               width: 4.w,
                                             ),
                                             Obx(
-                                                  () => Text(
-                                                insertController.paytypeSelected.isFalse?'Payment Type':'${insertController.paytypeNameList[insertController.paytypeIndex.value]}',
+                                              () => Text(
+                                                insertController
+                                                        .paytypeSelected.isFalse
+                                                    ? 'Payment Type'
+                                                    : '${insertController.paytypeNameList[insertController.paytypeIndex.value]}',
                                                 style: GoogleFonts.poppins(
-                                                    color: Colors.blueGrey.shade300,
+                                                    color: Colors
+                                                        .blueGrey.shade300,
                                                     fontWeight: FontWeight.w500,
                                                     fontSize: 12.sp,
                                                     letterSpacing: 1),
@@ -487,7 +724,11 @@ class _TransactionScreenState extends State<TransactionScreen> {
 
                                     // today / date
                                     Container(
-                                      margin: EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
+                                      margin: EdgeInsets.only(
+                                          left: 20,
+                                          right: 20,
+                                          top: 5,
+                                          bottom: 5),
                                       padding: EdgeInsets.all(5),
                                       height: 8.h,
                                       width: MediaQuery.of(context).size.width,
@@ -498,7 +739,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                       alignment: Alignment.center,
                                       child: TextField(
                                         controller: txtDate,
-                                        textAlignVertical: TextAlignVertical.top,
+                                        textAlignVertical:
+                                            TextAlignVertical.top,
                                         cursorColor: Colors.blueGrey,
                                         style: GoogleFonts.poppins(
                                             color: Colors.blueGrey.shade300,
@@ -518,14 +760,19 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                               fontWeight: FontWeight.w500,
                                               fontSize: 12.sp,
                                               letterSpacing: 1),
-                                          border: UnderlineInputBorder(borderSide: BorderSide.none),
+                                          border: UnderlineInputBorder(
+                                              borderSide: BorderSide.none),
                                         ),
                                       ),
                                     ),
 
                                     // time box
                                     Container(
-                                      margin: EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
+                                      margin: EdgeInsets.only(
+                                          left: 20,
+                                          right: 20,
+                                          top: 5,
+                                          bottom: 5),
                                       padding: EdgeInsets.all(5),
                                       height: 7.h,
                                       width: MediaQuery.of(context).size.width,
@@ -536,7 +783,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                       alignment: Alignment.center,
                                       child: TextField(
                                         controller: txtTime,
-                                        textAlignVertical: TextAlignVertical.top,
+                                        textAlignVertical:
+                                            TextAlignVertical.top,
                                         cursorColor: Colors.blueGrey,
                                         style: GoogleFonts.poppins(
                                             color: Colors.blueGrey.shade300,
@@ -556,43 +804,92 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                               fontWeight: FontWeight.w500,
                                               fontSize: 12.sp,
                                               letterSpacing: 1),
-                                          border: UnderlineInputBorder(borderSide: BorderSide.none),
+                                          border: UnderlineInputBorder(
+                                              borderSide: BorderSide.none),
                                         ),
                                       ),
                                     ),
 
-
                                     // SAVE BOX
                                     InkWell(
                                       onTap: () {
-                                        String category = insertController.categoryNameList[insertController.categoryIndex.value];
-                                        String paytype = insertController.paytypeNameList[insertController.paytypeIndex.value];
+                                        int id = transactionController
+                                            .transactionList[index]['id'];
+                                        String category =
+                                            insertController.categoryNameList[
+                                                insertController
+                                                    .categoryIndex.value];
+                                        String paytype =
+                                            insertController.paytypeNameList[
+                                                insertController
+                                                    .paytypeIndex.value];
                                         String note = txtNote.text;
                                         String date = txtDate.text;
                                         String time = txtTime.text;
                                         String amount = txtAmount.text;
                                         int amt = int.parse(amount);
-                                        Icon i1 = insertController.categoryIconList[insertController.categoryIndex.value];
-                                        Icon i2 = insertController.paytypeIconList[insertController.paytypeIndex.value];
-                                        Color c1 = insertController.categoryColorList[insertController.categoryIndex.value];
-                                        InsertModel insertmodel = InsertModel(category: category,amount: amount,c1: c1,date: date,i1: i1,status: insertController.status.value,time: time,note: note,paytype: paytype,i2: i2);
-                                        insertController.transactionList.add(insertmodel);
-                                        DatabaseHelper databaseHelper = DatabaseHelper();
-                                        databaseHelper.insertDatabase(category: category, note: note, date: date, time: time, status: insertController.status.value==true?1:0, amount: amount,paytype: paytype);
-                                        if(insertController.status.isTrue)
-                                        {
-                                          homeController.totalBalance.value = homeController.totalBalance.value + amt;
-                                          homeController.totalIncome.value = homeController.totalIncome.value + amt;
-
+                                        Icon i1 =
+                                            insertController.categoryIconList[
+                                                insertController
+                                                    .categoryIndex.value];
+                                        Icon i2 =
+                                            insertController.paytypeIconList[
+                                                insertController
+                                                    .paytypeIndex.value];
+                                        Color c1 =
+                                            insertController.categoryColorList[
+                                                insertController
+                                                    .categoryIndex.value];
+                                        InsertModel insertmodel = InsertModel(
+                                            category: category,
+                                            amount: amount,
+                                            c1: c1,
+                                            date: date,
+                                            i1: i1,
+                                            status:
+                                                insertController.status.value,
+                                            time: time,
+                                            note: note,
+                                            paytype: paytype,
+                                            i2: i2);
+                                        //insertController.transactionList[index] = insertmodel;
+                                        DatabaseHelper databaseHelper =
+                                            DatabaseHelper();
+                                        databaseHelper.updateDatabase(
+                                            category: category,
+                                            note: note,
+                                            date: date,
+                                            time: time,
+                                            status:
+                                                insertController.status.value ==
+                                                        true
+                                                    ? 1
+                                                    : 0,
+                                            amount: amount,
+                                            paytype: paytype,
+                                            id: id);
+                                        if (insertController.status.isTrue) {
+                                          homeController.totalBalance.value =
+                                              homeController
+                                                      .totalBalance.value +
+                                                  amt;
+                                          homeController.totalIncome.value =
+                                              homeController.totalIncome.value +
+                                                  amt;
+                                        } else {
+                                          homeController.totalBalance.value =
+                                              homeController
+                                                      .totalBalance.value -
+                                                  amt;
+                                          homeController.totalExpense.value =
+                                              homeController
+                                                      .totalExpense.value +
+                                                  amt;
                                         }
-                                        else
-                                        {
-                                          homeController.totalBalance.value = homeController.totalBalance.value - amt;
-                                          homeController.totalExpense.value = homeController.totalExpense.value + amt;
-
-                                        }
-                                        insertController.categorySelected.value = false;
-                                        insertController.categoryIndex.value = 0;
+                                        insertController
+                                            .categorySelected.value = false;
+                                        insertController.categoryIndex.value =
+                                            0;
                                         transactionController.readTransaction();
                                         ////////////////// Database insert //////////////////////
                                         // DatabaseHelper databaseHelper = DatabaseHelper();
@@ -601,13 +898,19 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                         Get.back();
                                       },
                                       child: Container(
-                                        margin: EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
+                                        margin: EdgeInsets.only(
+                                            left: 20,
+                                            right: 20,
+                                            top: 5,
+                                            bottom: 5),
                                         padding: EdgeInsets.all(5),
                                         height: 5.h,
-                                        width: MediaQuery.of(context).size.width,
+                                        width:
+                                            MediaQuery.of(context).size.width,
                                         decoration: BoxDecoration(
                                             color: Colors.white,
-                                            borderRadius: BorderRadius.circular(10),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                             gradient: LinearGradient(colors: [
                                               Color(0xff489ee8),
                                               Color(0xffcc66ff),
@@ -630,29 +933,34 @@ class _TransactionScreenState extends State<TransactionScreen> {
                             );
                           },
                           onDoubleTap: () {
-                            int id = transactionController.transactionList[index]['id'];
+                            int id = transactionController
+                                .transactionList[index]['id'];
                             transactionController.deleteTransaction(id);
                           },
                           child: transactionBox(
-                            transactionController.transactionList[index]['category'],
-                            transactionController.transactionList[index]['note'],
-                            transactionController.transactionList[index]['date'],
-                            transactionController.transactionList[index]['time'],
-                            transactionController.transactionList[index]['amount'],
-                            insertController.transactionList[index].i1!,
-                            insertController.transactionList[index].c1!,
-                            // insertController.categoryIconList[index],
-                            // insertController.categoryColorList[index],
-                            transactionController.transactionList[index]['status'],
+                            transactionController.transactionList[index]
+                                ['category'],
+                            transactionController.transactionList[index]
+                                ['note'],
+                            transactionController.transactionList[index]
+                                ['date'],
+                            transactionController.transactionList[index]
+                                ['time'],
+                            transactionController.transactionList[index]
+                                ['amount'],
+                            // insertController.transactionList[index].i1!,
+                            // insertController.transactionList[index].c1!,
+                            insertController.categoryIconList[index],
+                            insertController.categoryColorList[index],
+                            transactionController.transactionList[index]
+                                ['status'],
                           ),
                         );
                       },
-                      itemCount:
-                      transactionController.transactionList.length),
-                  ),
+                      itemCount: transactionController.transactionList.length),
                 ),
+              ),
             ),
-
           ],
         ),
       ),
@@ -785,7 +1093,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              b1==1
+              b1 == 1
                   ? Text('-\$ ${amount}',
                       style: GoogleFonts.overpass(
                           color: Colors.green,

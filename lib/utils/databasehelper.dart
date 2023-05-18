@@ -8,8 +8,10 @@ import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
   Database? database;
-  TransactionController transactioncontroller = Get.put(TransactionController());
+  TransactionController transactioncontroller =
+      Get.put(TransactionController());
   HomeController homeController = Get.put(HomeController());
+
   // TODO check database
   Future<Database?> checkDatabase() async {
     if (database == null) {
@@ -50,8 +52,8 @@ class DatabaseHelper {
       'date': date,
       'time': time,
       'status': status,
-      'amount':amount,
-      'paytype':paytype,
+      'amount': amount,
+      'paytype': paytype,
     });
     print('inserted database========');
   }
@@ -65,15 +67,13 @@ class DatabaseHelper {
   }
 
   // TODO delete database
-  Future<void> deleteDatabase({required id})
-  async {
+  Future<void> deleteDatabase({required id}) async {
     database = await checkDatabase();
-    database!.delete('incomeexpense',where: "id=?",whereArgs: [id]);
+    database!.delete('incomeexpense', where: "id=?", whereArgs: [id]);
   }
 
   //TODO decending data
-  Future<List<Map>> decendingDatabase()
-  async {
+  Future<List<Map>> decendingDatabase() async {
     database = await checkDatabase();
     String sql = 'SELECT * FROM incomeexpense ORDER BY id DESC';
     List<Map> list = await database!.rawQuery(sql);
@@ -81,8 +81,7 @@ class DatabaseHelper {
   }
 
   //TODO decending data
-  Future<List<Map>> acendingDatabase()
-  async {
+  Future<List<Map>> acendingDatabase() async {
     database = await checkDatabase();
     String sql = 'SELECT * FROM incomeexpense ORDER BY id ASC';
     List<Map> list = await database!.rawQuery(sql);
@@ -90,14 +89,48 @@ class DatabaseHelper {
   }
 
   // TODO Filter data
-  Future<List<Map>> incomeExpenseFilter({required s1})
-  async {
+  Future<List<Map>> incomeExpenseFilter({required s1}) async {
     database = await checkDatabase();
     String sql = 'SELECT * FROM incomeexpense WHERE status = $s1';
     List<Map> list = await database!.rawQuery(sql);
     return list;
   }
 
+  //TODO UPDATE DATABASE
 
+  Future<void> updateDatabase(
+      {required category,
+      required id,
+      required note,
+      required paytype,
+      required date,
+      required time,
+      required status,
+      required amount}) async {
+    database = await checkDatabase();
+    database!.update(
+        'incomeexpense',
+        {
+          'category': category,
+          'note': note,
+          'date': date,
+          'time': time,
+          'status': status,
+          'amount': amount,
+          'paytype': paytype,
+        },
+        where: 'id=?',
+        whereArgs: [id]);
+  }
 
+  // TODO MASTER FILTER
+
+  Future<List<Map>> masteFilter({start,end})
+  async {
+    database = await checkDatabase();
+    String sql = 'SELECT * FROM incomeexpense WHERE date >= $start AND date <= $end';
+    List<Map> list = await database!.rawQuery(sql);
+    return list;
+
+  }
 }
