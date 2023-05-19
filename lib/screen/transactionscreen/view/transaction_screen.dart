@@ -234,6 +234,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                     ),
                                   ],
                                 ),
+                                // TODO DATE HELPER
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
@@ -246,7 +247,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                           firstDate: DateTime(2000),
                                           lastDate: DateTime(2030),
                                         );
-                                        print(pickedDate);
+
                                         transactionController.startDate.value = pickedDate;
                                       },
                                       child: Container(
@@ -290,8 +291,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                         );
                                         print(pickedDate);
                                         transactionController.endDate.value = pickedDate;
-                                        String start = '${transactionController.startDate.value!.day}/${transactionController.startDate.value!.month}/${transactionController.startDate.value!.day}';
-                                        String end = '${pickedDate!.day}/${pickedDate.month}/${pickedDate.year}';
+                                        String start = '${transactionController.startDate.value!.day}/${transactionController.startDate.value!.month}/${transactionController.startDate.value!.year}';
+                                        String end = '${transactionController.endDate.value!.day}/${transactionController.endDate.value!.month}/${transactionController.endDate.value!.year}';
                                         print('${start}  ${end}');
                                         transactionController.masterFilter(start, end);
                                       },
@@ -355,6 +356,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                       physics: BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
                         return InkWell(
+                          // UPDATE MEHTOD CLICK
                           onTap: () {
                             int status = transactionController
                                 .transactionList[index]['status'];
@@ -377,8 +379,10 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                     '${transactionController.transactionList[index]['note']}');
                             Get.defaultDialog(
                               title: 'Update',
-                              content: SingleChildScrollView(
-                                child: Column(
+                              content: Container(
+                                height: 300,
+                                child: ListView(
+                                  physics: BouncingScrollPhysics(),
                                   children: [
                                     // close button
                                     Row(
@@ -852,7 +856,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                             note: note,
                                             paytype: paytype,
                                             i2: i2);
-                                        //insertController.transactionList[index] = insertmodel;
+                                        insertController.transactionList[index] = insertmodel;
                                         DatabaseHelper databaseHelper =
                                             DatabaseHelper();
                                         databaseHelper.updateDatabase(
@@ -932,6 +936,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                               ),
                             );
                           },
+                          // DELETE METHOD CLICK
                           onDoubleTap: () {
                             int id = transactionController
                                 .transactionList[index]['id'];
@@ -948,12 +953,13 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                 ['time'],
                             transactionController.transactionList[index]
                                 ['amount'],
-                            // insertController.transactionList[index].i1!,
-                            // insertController.transactionList[index].c1!,
-                            insertController.categoryIconList[index],
-                            insertController.categoryColorList[index],
+                            insertController.transactionList[index].i1!,
+                            insertController.transactionList[index].c1!,
+                            // insertController.categoryIconList[index],
+                            // insertController.categoryColorList[index],
                             transactionController.transactionList[index]
                                 ['status'],
+                            transactionController.transactionList[index]['paytype'],
                           ),
                         );
                       },
@@ -1043,8 +1049,9 @@ class _TransactionScreenState extends State<TransactionScreen> {
     );
   }
 
+  // transaction box
   Widget transactionBox(String category, String note, String date, String time,
-      String amount, Icon i1, Color c1, int b1) {
+      String amount, Icon i1, Color c1, int b1,String paytype) {
     return Container(
       height: 11.h,
       width: MediaQuery.of(context).size.width,
@@ -1071,14 +1078,20 @@ class _TransactionScreenState extends State<TransactionScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                  width: 22.w,
-                  child: Text('${category}',
-                      style: GoogleFonts.poppins(
-                        color: Color(0xff31435b),
-                        fontWeight: FontWeight.w500,
-                        fontSize: 10.sp,
-                      ))),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                      width: 22.w,
+                      child: Text('${category}',
+                          style: GoogleFonts.poppins(
+                            color: Color(0xff31435b),
+                            fontWeight: FontWeight.w500,
+                            fontSize: 10.sp,
+                          ))),
+                  Text('$paytype',style: TextStyle(color: c1,fontSize: 7.sp)),
+                ],
+              ),
               Text('${note}',
                   style: GoogleFonts.poppins(
                     color: Colors.grey,

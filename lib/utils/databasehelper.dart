@@ -128,9 +128,9 @@ class DatabaseHelper {
   Future<List<Map>> masteFilter({start,end})
   async {
     database = await checkDatabase();
-    String sql = 'SELECT * FROM incomeexpense WHERE date >= $start AND date <= $end';
+    String sql = 'SELECT * FROM incomeexpense WHERE date>="$start" AND date<="$end"';
     List<Map> list = await database!.rawQuery(sql);
+    print('${list}================');
     return list;
-
   }
 }

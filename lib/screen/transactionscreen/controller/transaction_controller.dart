@@ -40,14 +40,17 @@ class TransactionController extends GetxController
     transactionList.value = await databaseHelper.acendingDatabase();
   }
 
+  //TODO MASTER FILTER
   // master filter
   //String initialDate = '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}';
   Rx<DateTime?> startDate = DateTime.now().obs;
   Rx<DateTime?> endDate = DateTime.now().obs;
+
   Future<void> masterFilter(String start,String end)
   async {
     DatabaseHelper databaseHelper = DatabaseHelper();
     transactionList.value = await databaseHelper.masteFilter(end: end,start: start);
+    print('${transactionList.value}====controller==');
   }
 
   // income expense filter
