@@ -61,4 +61,7 @@ class TransactionController extends GetxController
     transactionList.value = await databaseHelper.incomeExpenseFilter(s1: status);
   }
 
+  // Index of click
+  RxInt index = 0.obs;
+
 }
