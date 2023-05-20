@@ -97,5 +97,6 @@ class InsertController extends GetxController {
   // Date time variable
 
   Rx<DateTime?> pickeddate = DateTime.now().obs;
+  Rx<TimeOfDay?> pickedTime = TimeOfDay.now().obs;
 
 }

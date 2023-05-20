@@ -8,6 +8,7 @@ class TransactionController extends GetxController
 {
 
   RxList<Map> transactionList = <Map>[].obs;
+  RxList<Map> categoryList = <Map>[].obs;
   RxInt fliter = 2.obs;
 
   // read transaction
@@ -16,6 +17,13 @@ class TransactionController extends GetxController
     DatabaseHelper databaseHelper = DatabaseHelper();
     transactionList.value = await databaseHelper.readDatabase();
     print('${transactionList.length}====');
+  }
+  // read category
+  Future<void> readCategory()
+  async {
+    DatabaseHelper databaseHelper = DatabaseHelper();
+    categoryList.value = await databaseHelper.readCategory();
+    print(categoryList);
   }
 
   // delete database
@@ -54,7 +62,6 @@ class TransactionController extends GetxController
   }
 
   // income expense filter
-
   Future<void> readIncomeExpense(int status)
   async {
     DatabaseHelper databaseHelper = DatabaseHelper();

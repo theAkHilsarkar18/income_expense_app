@@ -34,7 +34,7 @@ class CategoryBottomsheet extends StatelessWidget {
           ],
         ),
       ),
-      itemCount: 12,
+      itemCount: insertController.categoryNameList.length,
     );
   }
 }

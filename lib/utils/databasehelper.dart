@@ -31,7 +31,9 @@ class DatabaseHelper {
       onCreate: (db, version) {
         String query =
             "CREATE TABLE incomeexpense(id INTEGER PRIMARY KEY AUTOINCREMENT,amount TEXT,category TEXT,note TEXT,date TEXT,time TEXT,status INTEGER,paytype TEXT)";
+        String categoryQuery = 'CREATE TABLE categorytable(id INTEGER PRIMARY KEY AUTOINCREMENT,category TEXT)';
         db.execute(query);
+        db.execute(categoryQuery);
       },
     );
   }
@@ -58,10 +60,25 @@ class DatabaseHelper {
     print('inserted database========');
   }
 
+  //TODO Insert data in category
+  Future<void> insertCategory({required category})
+  async {
+    database = await checkDatabase();
+    database!.insert('categorytable', {'category':category});
+  }
+
   // TODO read database
   Future<List<Map>> readDatabase() async {
     database = await checkDatabase();
     String sql = 'SELECT * FROM incomeexpense';
+    List<Map> list = await database!.rawQuery(sql);
+    return list;
+  }
+  // TODO read category
+  Future<List<Map>> readCategory()
+  async {
+    database = await checkDatabase();
+    String sql = 'SELECT * FROM categorytable';
     List<Map> list = await database!.rawQuery(sql);
     return list;
   }
@@ -70,6 +87,12 @@ class DatabaseHelper {
   Future<void> deleteDatabase({required id}) async {
     database = await checkDatabase();
     database!.delete('incomeexpense', where: "id=?", whereArgs: [id]);
+  }
+  // TODO delete Category database
+  Future<void> deleteCategory()
+  async {
+    database = await checkDatabase();
+    database!.delete('categorytable');
   }
 
   //TODO decending data
@@ -133,4 +156,6 @@ class DatabaseHelper {
     print('${list}================');
     return list;
   }
+
+  //TODO
 }

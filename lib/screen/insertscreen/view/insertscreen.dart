@@ -10,6 +10,8 @@ import 'package:income_expense_app/screen/insertscreen/stateless/datepicker.dart
 import 'package:income_expense_app/screen/insertscreen/stateless/incexp.dart';
 import 'package:income_expense_app/screen/insertscreen/stateless/paytypebottomsheet.dart';
 import 'package:income_expense_app/screen/insertscreen/stateless/paytypebox.dart';
+import 'package:income_expense_app/screen/insertscreen/stateless/savebutton.dart';
+import 'package:income_expense_app/screen/insertscreen/stateless/timepicker.dart';
 import 'package:income_expense_app/screen/transactionscreen/controller/transaction_controller.dart';
 import 'package:income_expense_app/utils/databasehelper.dart';
 import 'package:sizer/sizer.dart';
@@ -65,6 +67,8 @@ class _InsertscreenState extends State<Insertscreen> {
                       child: InkWell(onTap: () {
                         insertController.categorySelected.value = false;
                         insertController.categoryIndex.value = 0;
+                        DatabaseHelper databaseHelper = DatabaseHelper();
+                        databaseHelper.deleteCategory();
                         Get.back();
                       },child: Icon(Icons.close,color: Colors.blueGrey)),
                     ),
@@ -106,19 +110,7 @@ class _InsertscreenState extends State<Insertscreen> {
                   ),
                 ),
                 // category
-                InkWell(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadiusDirectional.circular(20)),
-                      builder: (context) {
-                        return CategoryBottomsheet();
-                      },
-                    );
-                  },
-                  child: CategoryBoxInsertscreen(),
-                ),
+               CategoryBoxInsertscreen(),
 
                 // note by enter value
                 Container(
@@ -177,44 +169,9 @@ class _InsertscreenState extends State<Insertscreen> {
                DatepickerInserscreen(),
 
                 // time box
-                Container(
-                  margin: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-                  padding: EdgeInsets.all(5),
-                  height: 8.h,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  alignment: Alignment.center,
-                  child: TextField(
-                    controller: txtTime,
-                    textAlignVertical: TextAlignVertical.top,
-                    cursorColor: Colors.blueGrey,
-                    style: GoogleFonts.poppins(
-                        color: Colors.blueGrey.shade300,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14.sp,
-                        letterSpacing: 1),
-                    keyboardType: TextInputType.name,
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.timelapse,
-                        color: Colors.blueGrey,
-                        size: 20.sp,
-                      ),
-                      hintText: 'Time',
-                      hintStyle: GoogleFonts.poppins(
-                          color: Colors.blueGrey.shade300,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 13.sp,
-                          letterSpacing: 1),
-                      border: UnderlineInputBorder(borderSide: BorderSide.none),
-                    ),
-                  ),
-                ),
+               TimepickerInsertscreen(),
 
-                SizedBox(height: 5.h,),
+                SizedBox(height: 2.h,),
 
                 // SAVE BOX
                 InkWell(
@@ -222,8 +179,8 @@ class _InsertscreenState extends State<Insertscreen> {
                     String category = insertController.categoryNameList[insertController.categoryIndex.value];
                     String paytype = insertController.paytypeNameList[insertController.paytypeIndex.value];
                     String note = txtNote.text;
-                    String date = txtDate.text;
-                    String time = txtTime.text;
+                    String date = '${insertController.pickeddate.value!.day}/${insertController.pickeddate.value!.month}/${insertController.pickeddate.value!.year}';
+                    String time = '${insertController.pickedTime.value!.hour} : ${insertController.pickedTime.value!.minute} ${insertController.pickedTime.value!.hour >= 0 && insertController.pickedTime.value!.hour <= 12 ? 'AM' : 'PM'}';
                     String amount = txtAmount.text;
                     int amt = int.parse(amount);
                     Icon i1 = insertController.categoryIconList[insertController.categoryIndex.value];
@@ -248,35 +205,9 @@ class _InsertscreenState extends State<Insertscreen> {
                     insertController.categorySelected.value = false;
                     insertController.categoryIndex.value = 0;
                     transactionController.readTransaction();
-                    ////////////////// Database insert //////////////////////
-                    // DatabaseHelper databaseHelper = DatabaseHelper();
-                    // databaseHelper.insertDatabase(category: category, note: note, date: date, time: time, status: 0);
-                    /////////////////////////////////////////////////////////////
                     Get.back();
                   },
-                  child: Container(
-                    margin: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-                    padding: EdgeInsets.all(5),
-                    height: 7.h,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        gradient: LinearGradient(colors: [
-                          Color(0xff489ee8),
-                          Color(0xffcc66ff),
-                          Color(0xfffa9477),
-                        ])),
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Save',
-                      style: GoogleFonts.poppins(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14.sp,
-                          letterSpacing: 1),
-                    ),
-                  ),
+                  child: SavebuttonInsertscreen(),
                 ),
                 SizedBox(
                   height: 2.h,
