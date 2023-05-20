@@ -4,6 +4,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:income_expense_app/screen/home/controller/homecontroller.dart';
 import 'package:income_expense_app/screen/insertscreen/controller/insertcontroller.dart';
 import 'package:income_expense_app/screen/insertscreen/model/insermodel.dart';
+import 'package:income_expense_app/screen/insertscreen/stateless/category.dart';
+import 'package:income_expense_app/screen/insertscreen/stateless/categorybottomsheet.dart';
+import 'package:income_expense_app/screen/insertscreen/stateless/datepicker.dart';
+import 'package:income_expense_app/screen/insertscreen/stateless/incexp.dart';
+import 'package:income_expense_app/screen/insertscreen/stateless/paytypebottomsheet.dart';
+import 'package:income_expense_app/screen/insertscreen/stateless/paytypebox.dart';
 import 'package:income_expense_app/screen/transactionscreen/controller/transaction_controller.dart';
 import 'package:income_expense_app/utils/databasehelper.dart';
 import 'package:sizer/sizer.dart';
@@ -65,32 +71,7 @@ class _InsertscreenState extends State<Insertscreen> {
                   ],
                 ),
                 // income / expense change button
-                Container(
-                  margin: EdgeInsets.all(10),
-                  padding: EdgeInsets.all(5),
-                  height: 10.h,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: Row(
-                    children: [
-                      InkWell(
-                          onTap: () {
-                            insertController.status.value = true;
-                            insertController.changeBox();
-                          },
-                          child: incomeBox()),
-                      InkWell(
-                          onTap: () {
-                            insertController.status.value = false;
-                            insertController.changeBox();
-                          },
-                          child: expenseBox()),
-                    ],
-                  ),
-                ),
+               IncomeExpenseBoxInsertScreen(),
                 // enter amount
                 Container(
                   margin: EdgeInsets.all(10),
@@ -132,70 +113,11 @@ class _InsertscreenState extends State<Insertscreen> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadiusDirectional.circular(20)),
                       builder: (context) {
-                        return GridView.builder(
-                          physics: BouncingScrollPhysics(),
-                          padding: EdgeInsets.all(20),
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,mainAxisSpacing: 20,crossAxisSpacing: 20),
-                          itemBuilder: (context, index) => InkWell(
-                            onTap: () {
-                              insertController.categoryIndex.value = index;
-                              insertController.categorySelected.value = true;
-                              Get.back();
-                            },
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                CircleAvatar(
-                                  radius: 22.sp,
-                                  backgroundColor: insertController.categoryColorList[index],
-                                  child: insertController.categoryIconList[index],
-                                ),
-                                SizedBox(height: 1.h,),
-                                Text('${insertController.categoryNameList[index]}',style: GoogleFonts.poppins(fontSize: 9.sp)),
-                              ],
-                            ),
-                          ),
-                          itemCount: 12,
-                        );
+                        return CategoryBottomsheet();
                       },
                     );
                   },
-                  child: Container(
-                    margin:
-                        EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-                    padding: EdgeInsets.all(5),
-                    height: 8.h,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 2.w,
-                        ),
-                        Icon(
-                          Icons.category,
-                          color: Colors.blueGrey,
-                        ),
-                        SizedBox(
-                          width: 4.w,
-                        ),
-                        Obx(
-                          () => Text(
-                            insertController.categorySelected.isFalse?'Category':'${insertController.categoryNameList[insertController.categoryIndex.value]}',
-                            style: GoogleFonts.poppins(
-                                color: Colors.blueGrey.shade300,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12.sp,
-                                letterSpacing: 1),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                  child: CategoryBoxInsertscreen(),
                 ),
 
                 // note by enter value
@@ -244,110 +166,15 @@ class _InsertscreenState extends State<Insertscreen> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadiusDirectional.circular(20)),
                       builder: (context) {
-                        return GridView.builder(
-                          shrinkWrap: true,
-                          physics: BouncingScrollPhysics(),
-                          padding: EdgeInsets.all(20),
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,mainAxisSpacing: 10,crossAxisSpacing: 10),
-                          itemBuilder: (context, index) => InkWell(
-                            onTap: () {
-                              insertController.paytypeIndex.value = index;
-                              insertController.paytypeSelected.value = true;
-                              Get.back();
-                            },
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                CircleAvatar(
-                                  radius: 30.sp,
-                                  backgroundColor: insertController.categoryColorList[index],
-                                  child: insertController.paytypeIconList[index],
-                                ),
-                                SizedBox(height: 1.h,),
-                                Text('${insertController.paytypeNameList[index]}',style: GoogleFonts.poppins(fontSize: 9.sp)),
-                              ],
-                            ),
-                          ),
-                          itemCount: insertController.paytypeIconList.length,
-                        );
+                        return PaytypeBottomsheet();
                       },
                     );
                   },
-                  child: Container(
-                    margin:
-                    EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-                    padding: EdgeInsets.all(5),
-                    height: 8.h,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 2.w,
-                        ),
-                        Icon(
-                          Icons.currency_exchange,
-                          color: Colors.blueGrey,
-                        ),
-                        SizedBox(
-                          width: 4.w,
-                        ),
-                        Obx(
-                              () => Text(
-                            insertController.paytypeSelected.isFalse?'Payment Type':'${insertController.paytypeNameList[insertController.paytypeIndex.value]}',
-                            style: GoogleFonts.poppins(
-                                color: Colors.blueGrey.shade300,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12.sp,
-                                letterSpacing: 1),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                  child: PaytypeBoxInsertscreen(),
                 ),
 
                 // today / date
-                Container(
-                  margin: EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-                  padding: EdgeInsets.all(5),
-                  height: 8.h,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  alignment: Alignment.center,
-                  child: TextField(
-                    controller: txtDate,
-                    textAlignVertical: TextAlignVertical.top,
-                    cursorColor: Colors.blueGrey,
-                    style: GoogleFonts.poppins(
-                        color: Colors.blueGrey.shade300,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14.sp,
-                        letterSpacing: 1),
-                    keyboardType: TextInputType.name,
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.date_range,
-                        color: Colors.blueGrey,
-                        size: 20.sp,
-                      ),
-                      hintText: 'Date',
-                      hintStyle: GoogleFonts.poppins(
-                          color: Colors.blueGrey.shade300,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 13.sp,
-                          letterSpacing: 1),
-                      border: UnderlineInputBorder(borderSide: BorderSide.none),
-                    ),
-                  ),
-                ),
+               DatepickerInserscreen(),
 
                 // time box
                 Container(
@@ -386,8 +213,6 @@ class _InsertscreenState extends State<Insertscreen> {
                     ),
                   ),
                 ),
-
-
 
                 SizedBox(height: 5.h,),
 
@@ -464,79 +289,4 @@ class _InsertscreenState extends State<Insertscreen> {
     );
   }
 
-  Widget incomeBox() {
-    return Expanded(
-      child: Obx(
-        () => Container(
-          margin: EdgeInsets.all(5),
-          height: 8.h,
-          width: 43.w,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            gradient: insertController.isChanged.isTrue
-                ? LinearGradient(colors: [
-                    Color(0xff489ee8),
-                    Color(0xffcc66ff),
-                    Color(0xfffa9477),
-                  ])
-                : LinearGradient(colors: [Colors.white, Colors.white]),
-          ),
-          alignment: Alignment.center,
-          child: insertController.isChanged.isTrue
-              ? Text('Income',
-                  style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 15.sp,
-                  ))
-              : Text(
-                  'Income',
-                  style: GoogleFonts.poppins(
-                    color: Colors.blueGrey,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 15.sp,
-                  ),
-                ),
-        ),
-      ),
-    );
-  }
-
-  Widget expenseBox() {
-    return Expanded(
-      child: Obx(
-        () => Container(
-          margin: EdgeInsets.all(5),
-          height: 8.h,
-          width: 43.w,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            gradient: insertController.isChanged.isFalse
-                ? LinearGradient(colors: [
-                    Color(0xff489ee8),
-                    Color(0xffcc66ff),
-                    Color(0xfffa9477),
-                  ])
-                : LinearGradient(colors: [Colors.white, Colors.white]),
-          ),
-          alignment: Alignment.center,
-          child: insertController.isChanged.isFalse
-              ? Text('Expense',
-                  style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 15.sp,
-                  ))
-              : Text(
-                  'Expense',
-                  style: GoogleFonts.poppins(
-                    color: Colors.blueGrey,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 15.sp,
-                  ),
-                ),
-        ),
-      ),
-    );
-  }
 }
