@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:income_expense_app/screen/home/controller/homecontroller.dart';
+import 'package:income_expense_app/screen/transactionscreen/controller/transaction_controller.dart';
 import 'package:sizer/sizer.dart';
 
 class BalanceCardHomescreen extends StatelessWidget {
@@ -11,6 +12,7 @@ class BalanceCardHomescreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeController homeController = Get.put(HomeController());
+    TransactionController transactionController = Get.put(TransactionController());
     return Container(
       margin: EdgeInsets.all(10),
       height: 24.h,
@@ -41,7 +43,7 @@ class BalanceCardHomescreen extends StatelessWidget {
                   fontSize: 12.sp,
                   letterSpacing: 1)),
           Obx(
-                () =>  Text('\$ ${homeController.totalBalance.value}.00',
+                () =>  Text('\$ ${transactionController.totalIncomeList[0]['SUM(amount)']-transactionController.totalExpanseList[0]['SUM(amount)']}.00',
                 style: GoogleFonts.overpass(
                     color: Colors.white,
                     fontSize: 20.sp,
@@ -79,7 +81,7 @@ class BalanceCardHomescreen extends StatelessWidget {
                         height: 5,
                       ),
                       Obx(
-                            () =>  Text('${homeController.totalExpense.value}.00',
+                            () =>  Text('${transactionController.totalExpanseList[0]['SUM(amount)']}.0',
                             style: GoogleFonts.overpass(
                                 color: Colors.white,
                                 fontSize: 12.sp,
@@ -117,7 +119,7 @@ class BalanceCardHomescreen extends StatelessWidget {
                         height: 5,
                       ),
                       Obx(
-                            () => Text('${homeController.totalIncome.value}.00',
+                            () => Text('${transactionController.totalIncomeList[0]['SUM(amount)']}.0',
                             style: GoogleFonts.overpass(
                                 color: Colors.white,
                                 fontSize: 12.sp,

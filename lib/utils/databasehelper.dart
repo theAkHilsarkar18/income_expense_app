@@ -30,7 +30,7 @@ class DatabaseHelper {
       version: 1,
       onCreate: (db, version) {
         String query =
-            "CREATE TABLE incomeexpense(id INTEGER PRIMARY KEY AUTOINCREMENT,amount TEXT,category TEXT,note TEXT,date TEXT,time TEXT,status INTEGER,paytype TEXT)";
+            "CREATE TABLE incomeexpense(id INTEGER PRIMARY KEY AUTOINCREMENT,amount INTEGER,category TEXT,note TEXT,date TEXT,time TEXT,status INTEGER,paytype TEXT,image TEXT)";
         String categoryQuery = 'CREATE TABLE categorytable(id INTEGER PRIMARY KEY AUTOINCREMENT,category TEXT)';
         db.execute(query);
         db.execute(categoryQuery);
@@ -79,6 +79,23 @@ class DatabaseHelper {
   async {
     database = await checkDatabase();
     String sql = 'SELECT * FROM categorytable';
+    List<Map> list = await database!.rawQuery(sql);
+    return list;
+  }
+
+  //TODO total income
+  Future<List<Map>> totalIncome()
+  async {
+    database = await checkDatabase();
+    String sql = 'SELECT SUM(amount) FROM incomeexpense WHERE status=1';
+    List<Map> list = await database!.rawQuery(sql);
+    return list;
+  }
+  //TODO total expanse
+  Future<List<Map>> totalExpanse()
+  async {
+    database = await checkDatabase();
+    String sql = 'SELECT SUM(amount) FROM incomeexpense WHERE status=0';
     List<Map> list = await database!.rawQuery(sql);
     return list;
   }

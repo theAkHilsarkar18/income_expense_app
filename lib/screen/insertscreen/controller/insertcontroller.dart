@@ -99,4 +99,20 @@ class InsertController extends GetxController {
   Rx<DateTime?> pickeddate = DateTime.now().obs;
   Rx<TimeOfDay?> pickedTime = TimeOfDay.now().obs;
 
+  // category image list
+  List categoryImageList = [
+    'assets/category/food.png',
+    'assets/category/shop.png',
+    'assets/category/ent.png',
+    'assets/category/travel.png',
+    'assets/category/rent.png',
+    'assets/category/recharge.png',
+    'assets/category/education.png',
+    'assets/category/health.png',
+    'assets/category/salary.png',
+    'assets/category/bill.png',
+    'assets/category/fuel.png',
+    'assets/category/grocery.png',
+    'assets/category/pocket.png',
+  ];
 }

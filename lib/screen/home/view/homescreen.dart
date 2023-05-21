@@ -38,6 +38,8 @@ class _HomescreenState extends State<Homescreen> {
     DatabaseHelper databaseHelper = DatabaseHelper();
     databaseHelper.checkDatabase();
     transactionController.readTransaction();
+    transactionController.totalIncome();
+    transactionController.totalExpanse();
     print("${transactionController.transactionList.length}======initstate========");
   }
   @override

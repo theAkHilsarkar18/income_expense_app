@@ -26,8 +26,8 @@ class CategoryBottomsheet extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 22.sp,
-              backgroundColor: insertController.categoryColorList[index],
-              child: insertController.categoryIconList[index],
+              backgroundColor: insertController.categoryColorList[index%13],
+              child: Image.asset('${insertController.categoryImageList[index]}',height: 26,width: 26,),
             ),
             SizedBox(height: 1.h,),
             Text('${insertController.categoryNameList[index]}',style: GoogleFonts.poppins(fontSize: 9.sp)),

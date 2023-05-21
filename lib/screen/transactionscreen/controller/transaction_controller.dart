@@ -71,4 +71,32 @@ class TransactionController extends GetxController
   // Index of click
   RxInt index = 0.obs;
 
+  //total income method
+  RxList<Map> totalIncomeList = <Map>[].obs;
+  RxList<Map> totalExpanseList = <Map>[].obs;
+
+  Future<void> totalIncome()
+  async {
+    DatabaseHelper databaseHelper = DatabaseHelper();
+    totalIncomeList.value = await databaseHelper.totalIncome();
+    print("${totalIncomeList[0]['SUM(amount)']}-------------income-------------------------");
+
+
+  }
+
+  //total expanse method
+  Future<void> totalExpanse()
+  async {
+    DatabaseHelper databaseHelper = DatabaseHelper();
+    totalExpanseList.value = await databaseHelper.totalExpanse();
+    print("${totalExpanseList[0]['SUM(amount)']}------------------expanse--------------------");
+    int income = totalIncomeList[0]['SUM(amount)'];
+
+  }
+
+
+
+
+
+
 }

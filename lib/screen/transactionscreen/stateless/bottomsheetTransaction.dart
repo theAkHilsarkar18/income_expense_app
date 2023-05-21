@@ -179,6 +179,17 @@ class BottomModalSheetOfTransactionScreen extends StatelessWidget {
                   onTap: () async {
                     DateTime? pickedDate = await showDatePicker(
                       context: context,
+                      builder: (context, child) {
+                        return Theme(
+                          data: ThemeData(
+                            colorScheme: ColorScheme.light(
+                              primary: Color(0xfffa9477),
+                            ),
+                            dialogBackgroundColor: Colors.white,
+                          ),
+                          child: child ?? Text(""),
+                        );
+                      },
                       initialDate: DateTime.now(),
                       firstDate: DateTime(2000),
                       lastDate: DateTime(2030),
@@ -233,6 +244,17 @@ class BottomModalSheetOfTransactionScreen extends StatelessWidget {
                 InkWell(
                   onTap: () async {
                     DateTime? pickedDate = await showDatePicker(
+                      builder: (context, child) {
+                        return Theme(
+                          data: ThemeData(
+                            colorScheme: ColorScheme.light(
+                              primary: Color(0xfffa9477),
+                            ),
+                            dialogBackgroundColor: Colors.white,
+                          ),
+                          child: child ?? Text(""),
+                        );
+                      },
                       context: context,
                       initialDate: DateTime.now(),
                       firstDate: DateTime(2000),

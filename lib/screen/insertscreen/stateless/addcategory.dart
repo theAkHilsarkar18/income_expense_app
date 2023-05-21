@@ -71,8 +71,7 @@ class AddCategoryInsertscreen extends StatelessWidget {
                   int index = transactionController.categoryList.length - 1;
                   print(index);
                   insertController.categoryNameList.add(transactionController.categoryList[index]['category']);
-                  insertController.categoryIconList.add(Icon(Icons.category_outlined,color: Colors.white,));
-                  insertController.categoryColorList.add(Colors.orange);
+                  insertController.categoryImageList.add('assets/category/new.png');
                   print('${insertController.categoryNameList}');
                 });
                 Get.back();

@@ -49,7 +49,7 @@ class ListViewHomescreen extends StatelessWidget {
 
 
 // transaction box
-Widget transactionBox(String category,String note,String date,String time,String amount,Icon i1,Color c1,int b1,String paytype) {
+Widget transactionBox(String category,String note,String date,String time,int amount,Icon i1,Color c1,int b1,String paytype) {
   return Container(
     height: 11.h,
     width: double.infinity,

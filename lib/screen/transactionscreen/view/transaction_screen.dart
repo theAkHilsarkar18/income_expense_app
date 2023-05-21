@@ -116,6 +116,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                             int id = transactionController
                                 .transactionList[index]['id'];
                             transactionController.deleteTransaction(id);
+                            transactionController.totalIncome();
+                            transactionController.totalExpanse();
                           },
                           child: transactionBox(
                             transactionController.transactionList[index]
@@ -128,10 +130,10 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                 ['time'],
                             transactionController.transactionList[index]
                                 ['amount'],
-                            insertController.transactionList[index].i1!,
-                            insertController.transactionList[index].c1!,
-                            // insertController.categoryIconList[index],
-                            // insertController.categoryColorList[index],
+                            // insertController.transactionList[index].i1!,
+                            // insertController.transactionList[index].c1!,
+                            insertController.categoryIconList[index],
+                            insertController.categoryColorList[index],
                             transactionController.transactionList[index]
                                 ['status'],
                             transactionController.transactionList[index]['paytype'],
@@ -148,7 +150,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
     );
   }
   Widget transactionBox(String category, String note, String date, String time,
-      String amount, Icon i1, Color c1, int b1,String paytype) {
+      int amount, Icon i1, Color c1, int b1,String paytype) {
     return Container(
       height: 11.h,
       width: MediaQuery.of(context).size.width,

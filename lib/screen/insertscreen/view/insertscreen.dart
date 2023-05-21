@@ -194,17 +194,17 @@ class _InsertscreenState extends State<Insertscreen> {
                       {
                         homeController.totalBalance.value = homeController.totalBalance.value + amt;
                         homeController.totalIncome.value = homeController.totalIncome.value + amt;
-
                       }
                     else
                       {
                         homeController.totalBalance.value = homeController.totalBalance.value - amt;
                         homeController.totalExpense.value = homeController.totalExpense.value + amt;
-
                       }
                     insertController.categorySelected.value = false;
                     insertController.categoryIndex.value = 0;
                     transactionController.readTransaction();
+                    transactionController.totalIncome();
+                    transactionController.totalExpanse();
                     Get.back();
                   },
                   child: SavebuttonInsertscreen(),

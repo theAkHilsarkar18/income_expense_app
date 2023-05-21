@@ -32,7 +32,7 @@ class DatepickerInserscreen extends StatelessWidget {
                     return Theme(
                       data: ThemeData(
                         colorScheme: ColorScheme.light(
-                            primary: Color(0xffcc66ff),
+                            primary: Color(0xfffa9477),
                            ),
                         dialogBackgroundColor: Colors.white,
                       ),
