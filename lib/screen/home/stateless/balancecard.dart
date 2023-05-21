@@ -11,8 +11,10 @@ class BalanceCardHomescreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    num zero = 0;
     HomeController homeController = Get.put(HomeController());
-    TransactionController transactionController = Get.put(TransactionController());
+    TransactionController transactionController =
+        Get.put(TransactionController());
     return Container(
       margin: EdgeInsets.all(10),
       height: 24.h,
@@ -39,11 +41,10 @@ class BalanceCardHomescreen extends StatelessWidget {
         children: [
           Text('Total Balance',
               style: GoogleFonts.overpass(
-                  color: Colors.white,
-                  fontSize: 12.sp,
-                  letterSpacing: 1)),
+                  color: Colors.white, fontSize: 12.sp, letterSpacing: 1)),
           Obx(
-                () =>  Text('\$ ${transactionController.totalIncomeList[0]['SUM(amount)']-transactionController.totalExpanseList[0]['SUM(amount)']}.00',
+            () => Text(
+                '\$ ${transactionController.totalIncomeList[0]['SUM(amount)'] - transactionController.totalExpanseList[0]['SUM(amount)']}.00',
                 style: GoogleFonts.overpass(
                     color: Colors.white,
                     fontSize: 20.sp,
@@ -81,7 +82,8 @@ class BalanceCardHomescreen extends StatelessWidget {
                         height: 5,
                       ),
                       Obx(
-                            () =>  Text('${transactionController.totalExpanseList[0]['SUM(amount)']}.0',
+                        () => Text(
+                            '${transactionController.totalExpanseList[0]['SUM(amount)']==null?zero:transactionController.totalExpanseList[0]['SUM(amount)']}.0',
                             style: GoogleFonts.overpass(
                                 color: Colors.white,
                                 fontSize: 12.sp,
@@ -119,7 +121,8 @@ class BalanceCardHomescreen extends StatelessWidget {
                         height: 5,
                       ),
                       Obx(
-                            () => Text('${transactionController.totalIncomeList[0]['SUM(amount)']}.0',
+                        () => Text(
+                            '${transactionController.totalIncomeList[0]['SUM(amount)']==null?zero:transactionController.totalIncomeList[0]['SUM(amount)']}.0',
                             style: GoogleFonts.overpass(
                                 color: Colors.white,
                                 fontSize: 12.sp,

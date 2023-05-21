@@ -34,8 +34,8 @@ class ListViewHomescreen extends StatelessWidget {
                 transactionController.transactionList[index]['amount'],
                 // insertController.transactionList[index].i1!,
                 // insertController.transactionList[index].c1!,
-                insertController.categoryIconList[index],
-                insertController.categoryColorList[index],
+                transactionController.transactionList[index]['image'],
+                insertController.categoryColorList[index%13],
                 transactionController.transactionList[index]['status'],
                 //insertController.transactionList[index].paytype!,
                 transactionController.transactionList[index]['paytype'],
@@ -49,7 +49,7 @@ class ListViewHomescreen extends StatelessWidget {
 
 
 // transaction box
-Widget transactionBox(String category,String note,String date,String time,int amount,Icon i1,Color c1,int b1,String paytype) {
+Widget transactionBox(String category,String note,String date,String time,int amount,String img,Color c1,int b1,String paytype) {
   return Container(
     height: 11.h,
     width: double.infinity,
@@ -67,7 +67,7 @@ Widget transactionBox(String category,String note,String date,String time,int am
         CircleAvatar(
           radius: 22.sp,
           backgroundColor: c1,
-          child: i1,
+          child: Image.asset('$img',height: 26,width: 26,),
         ),
         SizedBox(
           width: 4.w,

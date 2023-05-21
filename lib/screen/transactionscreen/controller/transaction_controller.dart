@@ -60,6 +60,12 @@ class TransactionController extends GetxController
     transactionList.value = await databaseHelper.masteFilter(end: end,start: start);
     print('${transactionList.value}====controller==');
   }
+  Future<void> categoryFilter(String category)
+  async {
+    DatabaseHelper databaseHelper = DatabaseHelper();
+    transactionList.value = await databaseHelper.categoryFilter(category);
+  }
+
 
   // income expense filter
   Future<void> readIncomeExpense(int status)
@@ -97,6 +103,9 @@ class TransactionController extends GetxController
 
 
 
+  //TODO--------------------------------------------Find category filter initialization---------------------------------------------------------------------------------------------------------------
 
+  RxBool categorySelected = false.obs;
+  RxInt categoryIndex = 0.obs;
 
 }

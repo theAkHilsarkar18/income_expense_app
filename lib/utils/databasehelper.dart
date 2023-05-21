@@ -46,7 +46,8 @@ class DatabaseHelper {
       required date,
       required time,
       required status,
-      required amount}) async {
+      required amount,
+      required image}) async {
     database = await checkDatabase();
     database!.insert("incomeexpense", {
       'category': category,
@@ -56,6 +57,7 @@ class DatabaseHelper {
       'status': status,
       'amount': amount,
       'paytype': paytype,
+      'image' : image
     });
     print('inserted database========');
   }
@@ -146,7 +148,9 @@ class DatabaseHelper {
       required date,
       required time,
       required status,
-      required amount}) async {
+      required amount,
+        required image,
+      }) async {
     database = await checkDatabase();
     database!.update(
         'incomeexpense',
@@ -158,6 +162,7 @@ class DatabaseHelper {
           'status': status,
           'amount': amount,
           'paytype': paytype,
+          'image': image,
         },
         where: 'id=?',
         whereArgs: [id]);
@@ -174,5 +179,13 @@ class DatabaseHelper {
     return list;
   }
 
-  //TODO
+  //TODO CATEGORY FILTER
+  Future<List<Map>> categoryFilter(String category)
+  async {
+    database = await checkDatabase();
+    String sql = 'SELECT * FROM incomeexpense WHERE category="${category}"';
+    List<Map> list = await database!.rawQuery(sql);
+    print('${list}================');
+    return list;
+  }
 }

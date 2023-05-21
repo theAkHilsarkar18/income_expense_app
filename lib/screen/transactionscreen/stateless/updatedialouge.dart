@@ -10,11 +10,19 @@ import 'package:sizer/sizer.dart';
 import '../../../utils/databasehelper.dart';
 import '../../insertscreen/model/insermodel.dart';
 
-class UpdateDialougeOfTransactionScreen extends StatelessWidget {
-  const UpdateDialougeOfTransactionScreen({Key? key}) : super(key: key);
+class UpdateDialougeBoxOfTransactionscreen extends StatefulWidget {
+  const UpdateDialougeBoxOfTransactionscreen({Key? key}) : super(key: key);
 
   @override
+  State<UpdateDialougeBoxOfTransactionscreen> createState() =>
+      _UpdateDialougeBoxOfTransactionscreenState();
+}
+
+class _UpdateDialougeBoxOfTransactionscreenState
+    extends State<UpdateDialougeBoxOfTransactionscreen> {
+  @override
   Widget build(BuildContext context) {
+
     TransactionController transactionController =
         Get.put(TransactionController());
     InsertController insertController = Get.put(InsertController());
@@ -149,8 +157,12 @@ class UpdateDialougeOfTransactionScreen extends StatelessWidget {
                           CircleAvatar(
                             radius: 22.sp,
                             backgroundColor:
-                                insertController.categoryColorList[index],
-                            child: insertController.categoryIconList[index],
+                                insertController.categoryColorList[index % 13],
+                            child: Image.asset(
+                              '${insertController.categoryImageList[index]}',
+                              height: 26,
+                              width: 26,
+                            ),
                           ),
                           SizedBox(
                             height: 1.h,
@@ -160,7 +172,7 @@ class UpdateDialougeOfTransactionScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    itemCount: 12,
+                    itemCount: insertController.categoryNameList.length,
                   );
                 },
               );
@@ -409,29 +421,14 @@ class UpdateDialougeOfTransactionScreen extends StatelessWidget {
               String note = txtNote.text;
               String date = txtDate.text;
               String time = txtTime.text;
-              String amount = txtAmount.text;
-              int amt = int.parse(amount);
-              Icon i1 = insertController
-                  .categoryIconList[insertController.categoryIndex.value];
-              Icon i2 = insertController
-                  .paytypeIconList[insertController.paytypeIndex.value];
-              Color c1 = insertController
-                  .categoryColorList[insertController.categoryIndex.value];
-              InsertModel insertmodel = InsertModel(
-                  category: category,
-                  amount: amount,
-                  c1: c1,
-                  date: date,
-                  i1: i1,
-                  status: insertController.status.value,
-                  time: time,
-                  note: note,
-                  paytype: paytype,
-                  i2: i2);
-              insertController.transactionList[index] = insertmodel;
+              int amount = int.parse(txtAmount.text);
+              String image = insertController
+                  .categoryImageList[insertController.categoryIndex.value];
+              print('$image=======update dialouge');
               DatabaseHelper databaseHelper = DatabaseHelper();
               databaseHelper.updateDatabase(
                   category: category,
+                  image: image,
                   note: note,
                   date: date,
                   time: time,
@@ -439,24 +436,12 @@ class UpdateDialougeOfTransactionScreen extends StatelessWidget {
                   amount: amount,
                   paytype: paytype,
                   id: id);
-              if (insertController.status.isTrue) {
-                homeController.totalBalance.value =
-                    homeController.totalBalance.value + amt;
-                homeController.totalIncome.value =
-                    homeController.totalIncome.value + amt;
-              } else {
-                homeController.totalBalance.value =
-                    homeController.totalBalance.value - amt;
-                homeController.totalExpense.value =
-                    homeController.totalExpense.value + amt;
-              }
+
               insertController.categorySelected.value = false;
               insertController.categoryIndex.value = 0;
               transactionController.readTransaction();
-              ////////////////// Database insert //////////////////////
-              // DatabaseHelper databaseHelper = DatabaseHelper();
-              // databaseHelper.insertDatabase(category: category, note: note, date: date, time: time, status: 0);
-              /////////////////////////////////////////////////////////////
+              transactionController.totalIncome();
+              transactionController.totalExpanse();
               Get.back();
             },
             child: SaveboxOfTransactionScreen(),
@@ -468,10 +453,11 @@ class UpdateDialougeOfTransactionScreen extends StatelessWidget {
 }
 
 InsertController insertController = Get.put(InsertController());
+
 Widget incomeBox() {
   return Expanded(
     child: Obx(
-          () => Container(
+      () => Container(
         margin: EdgeInsets.all(5),
         height: 6.h,
         width: 29.w,
@@ -479,28 +465,28 @@ Widget incomeBox() {
           borderRadius: BorderRadius.circular(30),
           gradient: insertController.isChanged.isTrue
               ? LinearGradient(colors: [
-            Color(0xff489ee8),
-            Color(0xffcc66ff),
-            Color(0xfffa9477),
-          ])
+                  Color(0xff489ee8),
+                  Color(0xffcc66ff),
+                  Color(0xfffa9477),
+                ])
               : LinearGradient(colors: [Colors.white, Colors.white]),
         ),
         alignment: Alignment.center,
         child: insertController.isChanged.isTrue
             ? Text('Income',
-            style: GoogleFonts.poppins(
-              color: Colors.white,
-              fontWeight: FontWeight.w500,
-              fontSize: 13.sp,
-            ))
+                style: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 13.sp,
+                ))
             : Text(
-          'Income',
-          style: GoogleFonts.poppins(
-            color: Colors.blueGrey,
-            fontWeight: FontWeight.w500,
-            fontSize: 13.sp,
-          ),
-        ),
+                'Income',
+                style: GoogleFonts.poppins(
+                  color: Colors.blueGrey,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 13.sp,
+                ),
+              ),
       ),
     ),
   );
@@ -509,7 +495,7 @@ Widget incomeBox() {
 Widget expenseBox() {
   return Expanded(
     child: Obx(
-          () => Container(
+      () => Container(
         margin: EdgeInsets.all(5),
         height: 6.h,
         width: 29.w,
@@ -517,28 +503,28 @@ Widget expenseBox() {
           borderRadius: BorderRadius.circular(30),
           gradient: insertController.isChanged.isFalse
               ? LinearGradient(colors: [
-            Color(0xff489ee8),
-            Color(0xffcc66ff),
-            Color(0xfffa9477),
-          ])
+                  Color(0xff489ee8),
+                  Color(0xffcc66ff),
+                  Color(0xfffa9477),
+                ])
               : LinearGradient(colors: [Colors.white, Colors.white]),
         ),
         alignment: Alignment.center,
         child: insertController.isChanged.isFalse
             ? Text('Expense',
-            style: GoogleFonts.poppins(
-              color: Colors.white,
-              fontWeight: FontWeight.w500,
-              fontSize: 13.sp,
-            ))
+                style: GoogleFonts.poppins(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 13.sp,
+                ))
             : Text(
-          'Expense',
-          style: GoogleFonts.poppins(
-            color: Colors.blueGrey,
-            fontWeight: FontWeight.w500,
-            fontSize: 13.sp,
-          ),
-        ),
+                'Expense',
+                style: GoogleFonts.poppins(
+                  color: Colors.blueGrey,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 13.sp,
+                ),
+              ),
       ),
     ),
   );

@@ -40,7 +40,6 @@ class _HomescreenState extends State<Homescreen> {
     transactionController.readTransaction();
     transactionController.totalIncome();
     transactionController.totalExpanse();
-    print("${transactionController.transactionList.length}======initstate========");
   }
   @override
   Widget build(BuildContext context) {

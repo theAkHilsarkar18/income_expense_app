@@ -108,7 +108,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                             transactionController.index.value = index;
                             Get.defaultDialog(
                               title: 'Update',
-                              content: UpdateDialougeOfTransactionScreen(),
+                              content: UpdateDialougeBoxOfTransactionscreen(),
                             );
                           },
                           // DELETE METHOD CLICK
@@ -130,10 +130,9 @@ class _TransactionScreenState extends State<TransactionScreen> {
                                 ['time'],
                             transactionController.transactionList[index]
                                 ['amount'],
-                            // insertController.transactionList[index].i1!,
-                            // insertController.transactionList[index].c1!,
-                            insertController.categoryIconList[index],
-                            insertController.categoryColorList[index],
+                            transactionController.transactionList[index]
+                            ['image'],
+                            insertController.categoryColorList[index%13],
                             transactionController.transactionList[index]
                                 ['status'],
                             transactionController.transactionList[index]['paytype'],
@@ -150,7 +149,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
     );
   }
   Widget transactionBox(String category, String note, String date, String time,
-      int amount, Icon i1, Color c1, int b1,String paytype) {
+      int amount, String image, Color c1, int b1,String paytype) {
     return Container(
       height: 11.h,
       width: MediaQuery.of(context).size.width,
@@ -168,7 +167,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
           CircleAvatar(
             radius: 22.sp,
             backgroundColor: c1,
-            child: i1,
+            child: Image.asset('$image',height: 26,width: 26,),
           ),
           SizedBox(
             width: 4.w,
@@ -188,6 +187,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                             fontWeight: FontWeight.w500,
                             fontSize: 10.sp,
                           ))),
+                  SizedBox(width: 5.w,),
                   Text('$paytype',style: TextStyle(color: c1,fontSize: 7.sp)),
                 ],
               ),

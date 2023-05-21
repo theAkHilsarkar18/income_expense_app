@@ -181,25 +181,12 @@ class _InsertscreenState extends State<Insertscreen> {
                     String note = txtNote.text;
                     String date = '${insertController.pickeddate.value!.day}/${insertController.pickeddate.value!.month}/${insertController.pickeddate.value!.year}';
                     String time = '${insertController.pickedTime.value!.hour} : ${insertController.pickedTime.value!.minute} ${insertController.pickedTime.value!.hour >= 0 && insertController.pickedTime.value!.hour <= 12 ? 'AM' : 'PM'}';
-                    String amount = txtAmount.text;
-                    int amt = int.parse(amount);
-                    Icon i1 = insertController.categoryIconList[insertController.categoryIndex.value];
-                    Icon i2 = insertController.paytypeIconList[insertController.paytypeIndex.value];
-                    Color c1 = insertController.categoryColorList[insertController.categoryIndex.value];
-                    InsertModel insertmodel = InsertModel(category: category,amount: amount,c1: c1,date: date,i1: i1,status: insertController.status.value,time: time,note: note,paytype: paytype,i2: i2);
-                    insertController.transactionList.add(insertmodel);
+                    int amount = int.parse(txtAmount.text);
+                    String image = insertController.categoryImageList[insertController.categoryIndex.value];
+                    print('${image}============image of category');
+                    print('${insertController.categoryIndex.value}============image of category');
                     DatabaseHelper databaseHelper = DatabaseHelper();
-                    databaseHelper.insertDatabase(category: category, note: note, date: date, time: time, status: insertController.status.value==true?1:0, amount: amount,paytype: paytype);
-                    if(insertController.status.isTrue)
-                      {
-                        homeController.totalBalance.value = homeController.totalBalance.value + amt;
-                        homeController.totalIncome.value = homeController.totalIncome.value + amt;
-                      }
-                    else
-                      {
-                        homeController.totalBalance.value = homeController.totalBalance.value - amt;
-                        homeController.totalExpense.value = homeController.totalExpense.value + amt;
-                      }
+                    databaseHelper.insertDatabase(category: category, note: note, date: date, time: time, status: insertController.status.value==true?1:0, amount: amount,paytype: paytype,image: image);
                     insertController.categorySelected.value = false;
                     insertController.categoryIndex.value = 0;
                     transactionController.readTransaction();

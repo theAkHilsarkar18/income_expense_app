@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:income_expense_app/screen/transactionscreen/controller/transaction_controller.dart';
+import 'package:income_expense_app/screen/transactionscreen/stateless/findcategory.dart';
+import 'package:income_expense_app/screen/transactionscreen/stateless/updatedialouge.dart';
 import 'package:sizer/sizer.dart';
 
 class BottomModalSheetOfTransactionScreen extends StatelessWidget {
@@ -22,7 +24,7 @@ class BottomModalSheetOfTransactionScreen extends StatelessWidget {
               InkWell(
                 onTap: () {
                   transactionController.readTransaction();
-                  Get.back();
+
                 },
                 child: Container(
                   padding: EdgeInsets.only(
@@ -51,7 +53,6 @@ class BottomModalSheetOfTransactionScreen extends StatelessWidget {
                 onTap: () {
                   transactionController
                       .readIncomeExpense(1);
-                  Get.back();
                 },
                 child: Container(
                   padding: EdgeInsets.only(
@@ -69,7 +70,7 @@ class BottomModalSheetOfTransactionScreen extends StatelessWidget {
                   child: Text(
                     'Income',
                     style: GoogleFonts.poppins(
-                      color: Colors.green,
+                      color:Color(0xff31435b),
                       fontWeight: FontWeight.w600,
                       fontSize: 11.sp,
                     ),
@@ -80,7 +81,6 @@ class BottomModalSheetOfTransactionScreen extends StatelessWidget {
                 onTap: () {
                   transactionController
                       .readIncomeExpense(0);
-                  Get.back();
                 },
                 child: Container(
                   padding: EdgeInsets.only(
@@ -98,7 +98,7 @@ class BottomModalSheetOfTransactionScreen extends StatelessWidget {
                   child: Text(
                     'Expense',
                     style: GoogleFonts.poppins(
-                      color: Colors.red,
+                      color:Color(0xff31435b),
                       fontWeight: FontWeight.w600,
                       fontSize: 11.sp,
                     ),
@@ -107,6 +107,67 @@ class BottomModalSheetOfTransactionScreen extends StatelessWidget {
               ),
             ],
           ),
+
+          //TODO Select category row
+          Row(
+            children: [
+              Expanded(
+                child: InkWell(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                          BorderRadiusDirectional.circular(20)),
+                      builder: (context) => FindCategoryBottomsheet(),
+                    );
+                  },
+                  child: Container(
+                    margin:EdgeInsets.all(10),
+                    height: 7.h,
+                    width: 50.w,
+                    decoration: BoxDecoration(
+                        borderRadius:
+                        BorderRadius.circular(50),
+                        border: Border.all(
+                            color: Color(0xff31435b),
+                            width: 2)),
+                  alignment: Alignment.center,
+                    child: Obx(
+                      () => Text(
+                        transactionController.categorySelected.isFalse?'Select Category':insertController.categoryNameList[transactionController.categoryIndex.value],
+                        style: GoogleFonts.poppins(
+                          color: Color(0xff31435b),
+                          fontWeight: FontWeight.w500,
+                          fontSize: 13.sp,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  transactionController.categoryFilter(insertController.categoryNameList[transactionController.categoryIndex.value]);
+                  transactionController.categorySelected.value = false;
+                },
+                child: Container(
+                  margin: EdgeInsets.only(right: 20),
+                  height: 7.h,
+                  width: 15.w,
+                  decoration: BoxDecoration(
+                      borderRadius:
+                      BorderRadius.circular(20),
+                      border: Border.all(
+                          color: Color(0xff31435b),
+                          width: 2)),
+                  child: Icon(Icons.search,color:Color(0xff31435b),size: 25.sp,),
+                ),
+              ),
+            ],
+          ),
+
+          //TODO Acending and decending
           Row(
             mainAxisAlignment:
             MainAxisAlignment.spaceEvenly,
@@ -114,7 +175,6 @@ class BottomModalSheetOfTransactionScreen extends StatelessWidget {
               InkWell(
                 onTap: () {
                   transactionController.readAcending();
-                  Get.back();
                 },
                 child: Container(
                   padding: EdgeInsets.only(
@@ -132,7 +192,7 @@ class BottomModalSheetOfTransactionScreen extends StatelessWidget {
                   child: Text(
                     'Acending',
                     style: GoogleFonts.poppins(
-                      color: Colors.green,
+                      color:Color(0xff31435b),
                       fontWeight: FontWeight.w600,
                       fontSize: 11.sp,
                     ),
@@ -142,7 +202,6 @@ class BottomModalSheetOfTransactionScreen extends StatelessWidget {
               InkWell(
                 onTap: () {
                   transactionController.readDecending();
-                  Get.back();
                 },
                 child: Container(
                   padding: EdgeInsets.only(
@@ -160,7 +219,7 @@ class BottomModalSheetOfTransactionScreen extends StatelessWidget {
                   child: Text(
                     'Decending',
                     style: GoogleFonts.poppins(
-                      color: Colors.red,
+                      color: Color(0xff31435b),
                       fontWeight: FontWeight.w600,
                       fontSize: 11.sp,
                     ),
@@ -310,6 +369,33 @@ class BottomModalSheetOfTransactionScreen extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+          ),
+
+          //TODO---------------------------Save filter box------------------------------
+
+          InkWell(
+            onTap: () {
+              Get.back();
+            },
+            child: Container(
+              margin: EdgeInsets.all(10),
+              height: 7.h,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                color: Color(0xff31435b),
+                  borderRadius:
+                  BorderRadius.circular(50),
+                  border: Border.all(
+                      color: Color(0xff31435b),
+                      width: 2),
+              ),
+              alignment: Alignment.center,
+              child: Text('Back',style: GoogleFonts.poppins(
+                color: Colors.white,
+                fontWeight: FontWeight.w500,
+                fontSize: 14.sp,),
+            ),
             ),
           ),
         ],
