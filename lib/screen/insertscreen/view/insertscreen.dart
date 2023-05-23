@@ -179,14 +179,13 @@ class _InsertscreenState extends State<Insertscreen> {
                     String category = insertController.categoryNameList[insertController.categoryIndex.value];
                     String paytype = insertController.paytypeNameList[insertController.paytypeIndex.value];
                     String note = txtNote.text;
-                    String date = '${insertController.pickeddate.value!.day}/${insertController.pickeddate.value!.month}/${insertController.pickeddate.value!.year}';
+                    String date = '${insertController.pickeddate.value!.year}-${insertController.pickeddate.value!.month}-${insertController.pickeddate.value!.day}';
                     String time = '${insertController.pickedTime.value!.hour} : ${insertController.pickedTime.value!.minute} ${insertController.pickedTime.value!.hour >= 0 && insertController.pickedTime.value!.hour <= 12 ? 'AM' : 'PM'}';
                     int amount = int.parse(txtAmount.text);
                     String image = insertController.categoryImageList[insertController.categoryIndex.value];
-                    print('${image}============image of category');
-                    print('${insertController.categoryIndex.value}============image of category');
+                    int month = insertController.pickeddate.value!.month;
                     DatabaseHelper databaseHelper = DatabaseHelper();
-                    databaseHelper.insertDatabase(category: category, note: note, date: date, time: time, status: insertController.status.value==true?1:0, amount: amount,paytype: paytype,image: image);
+                    databaseHelper.insertDatabase(category: category, note: note, date: date, time: time, status: insertController.status.value==true?1:0, amount: amount,paytype: paytype,image: image,month: month);
                     insertController.categorySelected.value = false;
                     insertController.categoryIndex.value = 0;
                     transactionController.readTransaction();

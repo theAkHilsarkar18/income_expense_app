@@ -35,18 +35,6 @@ class TransactionController extends GetxController
     print('--------------');
   }
 
-  // decending data base
-  Future<void> readDecending()
-  async {
-    DatabaseHelper databaseHelper = DatabaseHelper();
-    transactionList.value = await databaseHelper.decendingDatabase();
-  }
-  // acending
-  Future<void> readAcending()
-  async {
-    DatabaseHelper databaseHelper = DatabaseHelper();
-    transactionList.value = await databaseHelper.acendingDatabase();
-  }
 
   //TODO MASTER FILTER
   // master filter
@@ -96,12 +84,51 @@ class TransactionController extends GetxController
     DatabaseHelper databaseHelper = DatabaseHelper();
     totalExpanseList.value = await databaseHelper.totalExpanse();
     print("${totalExpanseList[0]['SUM(amount)']}------------------expanse--------------------");
-    int income = totalIncomeList[0]['SUM(amount)'];
+    // int income = totalIncomeList[0]['SUM(amount)'];
+  }
 
+  // month filter
+  Future<void> monthFilter(int month)
+  async {
+    DatabaseHelper databaseHelper = DatabaseHelper();
+    transactionList.value = await databaseHelper.monthFilter(month);
+    print(transactionList);
   }
 
 
 
+//TODO--------------------------------------------Find category filter initialization---------------------------------------------------------------------------------------------------------------
+
+  RxBool monthSelected = false.obs;
+  RxInt monthIndex = 0.obs;
+  List monthList = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  List monthLetterList = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
 
   //TODO--------------------------------------------Find category filter initialization---------------------------------------------------------------------------------------------------------------
 

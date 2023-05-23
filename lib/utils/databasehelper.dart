@@ -30,7 +30,7 @@ class DatabaseHelper {
       version: 1,
       onCreate: (db, version) {
         String query =
-            "CREATE TABLE incomeexpense(id INTEGER PRIMARY KEY AUTOINCREMENT,amount INTEGER,category TEXT,note TEXT,date TEXT,time TEXT,status INTEGER,paytype TEXT,image TEXT)";
+            "CREATE TABLE incomeexpense(id INTEGER PRIMARY KEY AUTOINCREMENT,amount INTEGER,category TEXT,note TEXT,date TEXT,time TEXT,status INTEGER,paytype TEXT,image TEXT,month INTEGER)";
         String categoryQuery = 'CREATE TABLE categorytable(id INTEGER PRIMARY KEY AUTOINCREMENT,category TEXT)';
         db.execute(query);
         db.execute(categoryQuery);
@@ -47,7 +47,9 @@ class DatabaseHelper {
       required time,
       required status,
       required amount,
-      required image}) async {
+      required image,
+      required month,
+      }) async {
     database = await checkDatabase();
     database!.insert("incomeexpense", {
       'category': category,
@@ -57,7 +59,8 @@ class DatabaseHelper {
       'status': status,
       'amount': amount,
       'paytype': paytype,
-      'image' : image
+      'image' : image,
+      'month' : month
     });
     print('inserted database========');
   }
@@ -102,6 +105,15 @@ class DatabaseHelper {
     return list;
   }
 
+  //TODO Month wise filter
+  Future<List<Map>> monthFilter(int month)
+  async {
+    database = await checkDatabase();
+    String sql = 'SELECT * FROM incomeexpense WHERE month="${month}"';
+    List<Map> list = await database!.rawQuery(sql);
+    return list;
+  }
+
   // TODO delete database
   Future<void> deleteDatabase({required id}) async {
     database = await checkDatabase();
@@ -114,21 +126,6 @@ class DatabaseHelper {
     database!.delete('categorytable');
   }
 
-  //TODO decending data
-  Future<List<Map>> decendingDatabase() async {
-    database = await checkDatabase();
-    String sql = 'SELECT * FROM incomeexpense ORDER BY id DESC';
-    List<Map> list = await database!.rawQuery(sql);
-    return list;
-  }
-
-  //TODO decending data
-  Future<List<Map>> acendingDatabase() async {
-    database = await checkDatabase();
-    String sql = 'SELECT * FROM incomeexpense ORDER BY id ASC';
-    List<Map> list = await database!.rawQuery(sql);
-    return list;
-  }
 
   // TODO Filter data
   Future<List<Map>> incomeExpenseFilter({required s1}) async {
@@ -173,7 +170,7 @@ class DatabaseHelper {
   Future<List<Map>> masteFilter({start,end})
   async {
     database = await checkDatabase();
-    String sql = 'SELECT * FROM incomeexpense WHERE date>="$start" AND date<="$end"';
+    String sql = 'SELECT * FROM incomeexpense WHERE date BETWEEN "$start" AND "$end"';
     List<Map> list = await database!.rawQuery(sql);
     print('${list}================');
     return list;

@@ -25,6 +25,8 @@ class ListViewHomescreen extends StatelessWidget {
               onDoubleTap: () {
                 int id = transactionController.transactionList[index]['id'];
                 transactionController.deleteTransaction(id);
+                // transactionController.totalIncome();
+                // transactionController.totalExpanse();
               },
               child: transactionBox(
                 transactionController.transactionList[index]['category'],

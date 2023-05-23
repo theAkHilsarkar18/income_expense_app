@@ -57,7 +57,6 @@ class InsertController extends GetxController {
   ].obs;
 
   RxList<Color> categoryColorList = <Color>[
-    Colors.amber,
     Colors.teal,
     Colors.red,
     Colors.blueAccent,
@@ -70,6 +69,7 @@ class InsertController extends GetxController {
     Colors.cyan,
     Colors.lightBlue,
     Colors.brown,
+    Colors.amber,
   ].obs;
 
   // transaction list

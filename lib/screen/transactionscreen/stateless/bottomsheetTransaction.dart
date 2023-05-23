@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:income_expense_app/screen/transactionscreen/controller/transaction_controller.dart';
 import 'package:income_expense_app/screen/transactionscreen/stateless/findcategory.dart';
+import 'package:income_expense_app/screen/transactionscreen/stateless/monthsheet.dart';
 import 'package:income_expense_app/screen/transactionscreen/stateless/updatedialouge.dart';
 import 'package:sizer/sizer.dart';
 
@@ -167,67 +168,6 @@ class BottomModalSheetOfTransactionScreen extends StatelessWidget {
             ],
           ),
 
-          //TODO Acending and decending
-          Row(
-            mainAxisAlignment:
-            MainAxisAlignment.spaceEvenly,
-            children: [
-              InkWell(
-                onTap: () {
-                  transactionController.readAcending();
-                },
-                child: Container(
-                  padding: EdgeInsets.only(
-                      left: 20,
-                      top: 10,
-                      bottom: 10,
-                      right: 20),
-                  margin: EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                      borderRadius:
-                      BorderRadius.circular(50),
-                      border: Border.all(
-                          color: Color(0xff31435b),
-                          width: 2)),
-                  child: Text(
-                    'Acending',
-                    style: GoogleFonts.poppins(
-                      color:Color(0xff31435b),
-                      fontWeight: FontWeight.w600,
-                      fontSize: 11.sp,
-                    ),
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  transactionController.readDecending();
-                },
-                child: Container(
-                  padding: EdgeInsets.only(
-                      left: 20,
-                      top: 10,
-                      bottom: 10,
-                      right: 20),
-                  margin: EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                      borderRadius:
-                      BorderRadius.circular(50),
-                      border: Border.all(
-                          color: Color(0xff31435b),
-                          width: 2)),
-                  child: Text(
-                    'Decending',
-                    style: GoogleFonts.poppins(
-                      color: Color(0xff31435b),
-                      fontWeight: FontWeight.w600,
-                      fontSize: 11.sp,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
           // TODO DATE HELPER
           Obx(
                 () => Row(
@@ -274,14 +214,14 @@ class BottomModalSheetOfTransactionScreen extends StatelessWidget {
                           Padding(
                             padding:
                             const EdgeInsets.all(8.0),
-                            child: Icon(Icons.calendar_today),
+                            child: Icon(Icons.calendar_today,size: 19.sp,),
                           ),
                           transactionController.startDate.value==null?Text(
                             'From Date',
                             style: GoogleFonts.poppins(
                               color: Color(0xff31435b),
                               fontWeight: FontWeight.w600,
-                              fontSize: 12.sp,
+                              fontSize: 11.sp,
                               letterSpacing: 1,
                             ),
                           ):Text(
@@ -289,7 +229,7 @@ class BottomModalSheetOfTransactionScreen extends StatelessWidget {
                             style: GoogleFonts.poppins(
                               color: Color(0xff31435b),
                               fontWeight: FontWeight.w600,
-                              fontSize: 12.sp,
+                              fontSize: 11.sp,
                               letterSpacing: 1,
                             ),
                           ),
@@ -321,8 +261,8 @@ class BottomModalSheetOfTransactionScreen extends StatelessWidget {
                     );
                     print(pickedDate);
                     transactionController.endDate.value = pickedDate;
-                    String start = '${transactionController.startDate.value!.day}/${transactionController.startDate.value!.month}/${transactionController.startDate.value!.year}';
-                    String end = '${transactionController.endDate.value!.day}/${transactionController.endDate.value!.month}/${transactionController.endDate.value!.year}';
+                    String start = '${transactionController.startDate.value!.year}-${transactionController.startDate.value!.month}-${transactionController.startDate.value!.day}';
+                    String end = '${transactionController.endDate.value!.year}-${transactionController.endDate.value!.month}-${transactionController.endDate.value!.day}';
                     print('${start}  ${end}');
                     transactionController.masterFilter(start, end);
                   },
@@ -343,14 +283,14 @@ class BottomModalSheetOfTransactionScreen extends StatelessWidget {
                           Padding(
                             padding:
                             const EdgeInsets.all(8.0),
-                            child: Icon(Icons.calendar_month_sharp),
+                            child: Icon(Icons.calendar_month_sharp,size: 19.sp,),
                           ),
                           transactionController.endDate.value==null?Text(
                             'To Date',
                             style: GoogleFonts.poppins(
                               color: Color(0xff31435b),
                               fontWeight: FontWeight.w600,
-                              fontSize: 12.sp,
+                              fontSize: 11.sp,
                               letterSpacing: 1,
                             ),
                           ):Text(
@@ -358,24 +298,88 @@ class BottomModalSheetOfTransactionScreen extends StatelessWidget {
                             style: GoogleFonts.poppins(
                               color: Color(0xff31435b),
                               fontWeight: FontWeight.w600,
-                              fontSize: 12.sp,
+                              fontSize: 11.sp,
                               letterSpacing: 1,
                             ),
                           ),
-                          SizedBox(width: 8,),
+                          SizedBox(width: 10,),
                         ],
                       ),
                     ),
                   ),
                 ),
+                // search button
               ],
             ),
           ),
+
+          // TODO Month filetr
+          Row(
+            children: [
+              Expanded(
+                child: InkWell(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                          BorderRadiusDirectional.circular(20)),
+                      builder: (context) => Monthsheet(),
+                    );
+                  },
+                  child: Container(
+                    margin:EdgeInsets.all(10),
+                    height: 7.h,
+                    width: 50.w,
+                    decoration: BoxDecoration(
+                        borderRadius:
+                        BorderRadius.circular(50),
+                        border: Border.all(
+                            color: Color(0xff31435b),
+                            width: 2)),
+                    alignment: Alignment.center,
+                    child: Obx(
+                          () => Text(
+                        transactionController.monthSelected.isFalse?'Select Month':transactionController.monthList[transactionController.monthIndex.value],
+                        style: GoogleFonts.poppins(
+                          color: Color(0xff31435b),
+                          fontWeight: FontWeight.w500,
+                          fontSize: 13.sp,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  transactionController.monthFilter(transactionController.monthIndex.value+1);
+                  transactionController.monthSelected.value = false;
+
+                },
+                child: Container(
+                  margin: EdgeInsets.only(right: 20),
+                  height: 7.h,
+                  width: 15.w,
+                  decoration: BoxDecoration(
+                      borderRadius:
+                      BorderRadius.circular(20),
+                      border: Border.all(
+                          color: Color(0xff31435b),
+                          width: 2)),
+                  child: Icon(Icons.search,color:Color(0xff31435b),size: 25.sp,),
+                ),
+              ),
+            ],
+          ),
+
+          //
 
           //TODO---------------------------Save filter box------------------------------
 
           InkWell(
             onTap: () {
+              transactionController.readTransaction();
               Get.back();
             },
             child: Container(

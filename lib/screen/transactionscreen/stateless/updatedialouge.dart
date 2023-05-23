@@ -32,7 +32,7 @@ class _UpdateDialougeBoxOfTransactionscreenState
     TextEditingController txtCategory = TextEditingController();
     TextEditingController txtDate = TextEditingController(
         text:
-            '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}');
+            '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}');
     TextEditingController txtTime = TextEditingController(
         text:
             '${TimeOfDay.now().hour} : ${TimeOfDay.now().minute} ${TimeOfDay.now().hour >= 0 && TimeOfDay.now().hour <= 12 ? 'AM' : 'PM'}');
