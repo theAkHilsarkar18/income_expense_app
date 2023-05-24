@@ -21,21 +21,21 @@ class UpdateDialougeBoxOfTransactionscreen extends StatefulWidget {
 class _UpdateDialougeBoxOfTransactionscreenState
     extends State<UpdateDialougeBoxOfTransactionscreen> {
   @override
-  Widget build(BuildContext context) {
+  TransactionController transactionController =
+  Get.put(TransactionController());
+  InsertController insertController = Get.put(InsertController());
+  HomeController homeController = Get.put(HomeController());
+  TextEditingController txtAmount = TextEditingController(text: '2000');
+  TextEditingController txtNote = TextEditingController();
+  TextEditingController txtCategory = TextEditingController();
+  TextEditingController txtDate = TextEditingController(
+      text:
+      '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}');
+  TextEditingController txtTime = TextEditingController(
+      text:
+      '${TimeOfDay.now().hour} : ${TimeOfDay.now().minute} ${TimeOfDay.now().hour >= 0 && TimeOfDay.now().hour <= 12 ? 'AM' : 'PM'}');
 
-    TransactionController transactionController =
-        Get.put(TransactionController());
-    InsertController insertController = Get.put(InsertController());
-    HomeController homeController = Get.put(HomeController());
-    TextEditingController txtAmount = TextEditingController(text: '2000');
-    TextEditingController txtNote = TextEditingController();
-    TextEditingController txtCategory = TextEditingController();
-    TextEditingController txtDate = TextEditingController(
-        text:
-            '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}');
-    TextEditingController txtTime = TextEditingController(
-        text:
-            '${TimeOfDay.now().hour} : ${TimeOfDay.now().minute} ${TimeOfDay.now().hour >= 0 && TimeOfDay.now().hour <= 12 ? 'AM' : 'PM'}');
+  Widget build(BuildContext context) {
     int index = transactionController.index.value;
     int status = transactionController.transactionList[index]['status'];
     if (status == 1) {

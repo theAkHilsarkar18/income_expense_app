@@ -1,3 +1,4 @@
+import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -179,13 +180,14 @@ class _InsertscreenState extends State<Insertscreen> {
                     String category = insertController.categoryNameList[insertController.categoryIndex.value];
                     String paytype = insertController.paytypeNameList[insertController.paytypeIndex.value];
                     String note = txtNote.text;
+                    String dt = '${formatDate(DateTime(insertController.pickeddate.value!.year,insertController.pickeddate.value!.month,insertController.pickeddate.value!.day),[yyyy, '-', mm, '-', dd])}';
                     String date = '${insertController.pickeddate.value!.year}-${insertController.pickeddate.value!.month}-${insertController.pickeddate.value!.day}';
                     String time = '${insertController.pickedTime.value!.hour} : ${insertController.pickedTime.value!.minute} ${insertController.pickedTime.value!.hour >= 0 && insertController.pickedTime.value!.hour <= 12 ? 'AM' : 'PM'}';
                     int amount = int.parse(txtAmount.text);
                     String image = insertController.categoryImageList[insertController.categoryIndex.value];
                     int month = insertController.pickeddate.value!.month;
                     DatabaseHelper databaseHelper = DatabaseHelper();
-                    databaseHelper.insertDatabase(category: category, note: note, date: date, time: time, status: insertController.status.value==true?1:0, amount: amount,paytype: paytype,image: image,month: month);
+                    databaseHelper.insertDatabase(category: category, note: note, date: dt, time: time, status: insertController.status.value==true?1:0, amount: amount,paytype: paytype,image: image,month: month);
                     insertController.categorySelected.value = false;
                     insertController.categoryIndex.value = 0;
                     transactionController.readTransaction();

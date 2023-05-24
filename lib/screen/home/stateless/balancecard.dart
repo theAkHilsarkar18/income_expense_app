@@ -11,7 +11,7 @@ class BalanceCardHomescreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    num zero = 0;
+
     HomeController homeController = Get.put(HomeController());
     TransactionController transactionController =
         Get.put(TransactionController());
@@ -44,7 +44,10 @@ class BalanceCardHomescreen extends StatelessWidget {
                   color: Colors.white, fontSize: 12.sp, letterSpacing: 1)),
           Obx(
             () => Text(
-                transactionController.totalIncomeList.isEmpty && transactionController.totalIncomeList.isEmpty?"0":'\$ ${transactionController.totalIncomeList[0]['SUM(amount)'] - transactionController.totalExpanseList[0]['SUM(amount)']}.00',
+                transactionController.income.value==0 ||
+                        transactionController.expanse.value==0
+                    ? "\$ 0.00"
+                    : '\$ ${transactionController.totalIncomeList[0]['SUM(amount)'] - transactionController.totalExpanseList[0]['SUM(amount)']}.00',
                 style: GoogleFonts.overpass(
                     color: Colors.white,
                     fontSize: 20.sp,
@@ -83,7 +86,7 @@ class BalanceCardHomescreen extends StatelessWidget {
                       ),
                       Obx(
                         () => Text(
-                            '${transactionController.totalExpanseList.isEmpty?zero:transactionController.totalExpanseList[0]['SUM(amount)']}.0',
+                            '${transactionController.expanse.value==0 ? '\$ 0' : transactionController.totalExpanseList[0]['SUM(amount)']}.0',
                             style: GoogleFonts.overpass(
                                 color: Colors.white,
                                 fontSize: 12.sp,
@@ -122,7 +125,7 @@ class BalanceCardHomescreen extends StatelessWidget {
                       ),
                       Obx(
                         () => Text(
-                            '${transactionController.totalIncomeList.isEmpty?zero:transactionController.totalIncomeList[0]['SUM(amount)']}.0',
+                            '${transactionController.income.value==0 ? '\$ 0' : transactionController.totalIncomeList[0]['SUM(amount)']}.0',
                             style: GoogleFonts.overpass(
                                 color: Colors.white,
                                 fontSize: 12.sp,

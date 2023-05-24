@@ -46,7 +46,6 @@ class TransactionController extends GetxController
   async {
     DatabaseHelper databaseHelper = DatabaseHelper();
     transactionList.value = await databaseHelper.masteFilter(end: end,start: start);
-    print('${transactionList.value}====controller==');
   }
   Future<void> categoryFilter(String category)
   async {
@@ -66,6 +65,8 @@ class TransactionController extends GetxController
   RxInt index = 0.obs;
 
   //total income method
+  RxInt income = 0.obs;
+  RxInt expanse = 0.obs;
   RxList<Map> totalIncomeList = <Map>[].obs;
   RxList<Map> totalExpanseList = <Map>[].obs;
 
@@ -73,8 +74,7 @@ class TransactionController extends GetxController
   async {
     DatabaseHelper databaseHelper = DatabaseHelper();
     totalIncomeList.value = await databaseHelper.totalIncome();
-    print("${totalIncomeList[0]['SUM(amount)']}-------------income-------------------------");
-
+    income.value = totalIncomeList[0]['SUM(amount)']==null?0:totalIncomeList[0]['SUM(amount)'];
 
   }
 
@@ -83,9 +83,35 @@ class TransactionController extends GetxController
   async {
     DatabaseHelper databaseHelper = DatabaseHelper();
     totalExpanseList.value = await databaseHelper.totalExpanse();
-    print("${totalExpanseList[0]['SUM(amount)']}------------------expanse--------------------");
+    expanse.value = totalExpanseList[0]['SUM(amount)']==null?0:totalExpanseList[0]['SUM(amount)'];
     // int income = totalIncomeList[0]['SUM(amount)'];
   }
+
+  // total income expanse filter snackbar
+  RxInt incomeSnackbar = 0.obs;
+  RxInt expanseSnackbar = 0.obs;
+  Future<void> totalSnackbar()
+  async {
+    for(int i=0; i<transactionList.length; i++)
+      {
+        if(transactionList[i]['status']==1)
+          {
+            int amount = transactionList[i]['amount'];
+            incomeSnackbar.value = incomeSnackbar.value + amount;
+          }
+        else
+          {
+            int amount = transactionList[i]['amount'];
+            expanseSnackbar.value = expanseSnackbar.value + amount;
+          }
+        print(incomeSnackbar);
+        print(expanseSnackbar);
+
+      }
+    print(incomeSnackbar.value);
+    print(expanseSnackbar.value);
+  }
+
 
   // month filter
   Future<void> monthFilter(int month)

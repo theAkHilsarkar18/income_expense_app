@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "273489278493",
+    "project_id": "flutter-demo-rnw",
+    "storage_bucket": "flutter-demo-rnw.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:273489278493:android:ddc74350be77897f9af8f4",
+        "android_client_info": {
+          "package_name": "com.example.income_expense_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "273489278493-2qkmu03i6u008dvgf81fm00p4eqbhrk5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpcAY1UdGk0L45XSxzZkxiLjG2EkwnzvA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "273489278493-2qkmu03i6u008dvgf81fm00p4eqbhrk5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

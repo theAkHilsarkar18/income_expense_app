@@ -1,3 +1,4 @@
+import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,6 +19,8 @@ class BottomModalSheetOfTransactionScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
+
+          // view all , income , expanse
           Row(
             mainAxisAlignment:
             MainAxisAlignment.spaceEvenly,
@@ -25,7 +28,6 @@ class BottomModalSheetOfTransactionScreen extends StatelessWidget {
               InkWell(
                 onTap: () {
                   transactionController.readTransaction();
-
                 },
                 child: Container(
                   padding: EdgeInsets.only(
@@ -54,6 +56,7 @@ class BottomModalSheetOfTransactionScreen extends StatelessWidget {
                 onTap: () {
                   transactionController
                       .readIncomeExpense(1);
+                  Get.snackbar('Income', '\$ ${transactionController.income.value}',backgroundColor: Colors.green.shade100);
                 },
                 child: Container(
                   padding: EdgeInsets.only(
@@ -82,6 +85,7 @@ class BottomModalSheetOfTransactionScreen extends StatelessWidget {
                 onTap: () {
                   transactionController
                       .readIncomeExpense(0);
+                  Get.snackbar('Expanse', '\$ ${transactionController.expanse.value}',backgroundColor: Colors.red.shade100);
                 },
                 child: Container(
                   padding: EdgeInsets.only(
@@ -261,8 +265,8 @@ class BottomModalSheetOfTransactionScreen extends StatelessWidget {
                     );
                     print(pickedDate);
                     transactionController.endDate.value = pickedDate;
-                    String start = '${transactionController.startDate.value!.year}-${transactionController.startDate.value!.month}-${transactionController.startDate.value!.day}';
-                    String end = '${transactionController.endDate.value!.year}-${transactionController.endDate.value!.month}-${transactionController.endDate.value!.day}';
+                    String start = '${formatDate(DateTime(transactionController.startDate.value!.year,transactionController.startDate.value!.month,transactionController.startDate.value!.day),[yyyy, '-', mm, '-', dd])}';
+                    String end = '${formatDate(DateTime(transactionController.endDate.value!.year,transactionController.endDate.value!.month,transactionController.endDate.value!.day),[yyyy, '-', mm, '-', dd])}';
                     print('${start}  ${end}');
                     transactionController.masterFilter(start, end);
                   },
@@ -380,6 +384,8 @@ class BottomModalSheetOfTransactionScreen extends StatelessWidget {
           InkWell(
             onTap: () {
               transactionController.readTransaction();
+              transactionController.incomeSnackbar.value = 0;
+              transactionController.expanseSnackbar.value = 0;
               Get.back();
             },
             child: Container(
