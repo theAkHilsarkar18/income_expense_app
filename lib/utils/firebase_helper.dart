@@ -14,4 +14,21 @@ class FirebaseHelper {
         .then((value) => print("Login Success !"))
         .catchError((e) => print("Failed : $e"));
   }
+
+  bool status = false;
+  String msg = '';
+  bool signIn({required email, required password}) {
+    firebaseAuth
+        .signInWithEmailAndPassword(email: email, password: password)
+        .then((value) => status=true)
+        .catchError((e) => msg = '${e}');
+    return status;
+  }
+
+  bool checkUser()
+  {
+    User? user = firebaseAuth.currentUser;
+    return user != null;
+  }
+
 }
