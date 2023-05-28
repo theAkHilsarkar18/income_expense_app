@@ -12,8 +12,8 @@ class Spleshcreen extends StatefulWidget {
 }
 
 class _SpleshcreenState extends State<Spleshcreen> {
-
   bool isLogin = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -23,15 +23,22 @@ class _SpleshcreenState extends State<Spleshcreen> {
 
   @override
   Widget build(BuildContext context) {
-    Timer(Duration(seconds: 6), () {Navigator.pushReplacementNamed(context, isLogin?'login':'home');});
+    Timer(Duration(seconds: 6), () {
+      Get.offAndToNamed(isLogin ? '/home' : '/login');
+    });
     return SafeArea(
       child: Scaffold(
-        body: Center(child: Column(
+        body: Center(
+            child: Column(
           children: [
             Spacer(),
-            Image.asset('assets/img/logo.png',height: 150,),
+            Image.asset(
+              'assets/img/logo.png',
+              height: 150,
+            ),
             Spacer(),
-            LinearProgressIndicator(backgroundColor: Colors.pink.shade100,color: Colors.pink),
+            LinearProgressIndicator(
+                backgroundColor: Colors.pink.shade100, color: Colors.pink),
             // SizedBox(height: 10,),
           ],
         )),

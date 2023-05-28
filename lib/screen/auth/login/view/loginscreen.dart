@@ -62,6 +62,9 @@ class _LoginscreenState extends State<Loginscreen> {
                 TextButton(onPressed: () {
                   Get.toNamed('/signup');
                 }, child: Text('New user ?  Register.. ',style: GoogleFonts.overpass(color: Colors.pink,letterSpacing: 1),)),
+
+
+
                 SizedBox(height: 20,),
                 InkWell(
                   onTap: () async {
@@ -90,6 +93,21 @@ class _LoginscreenState extends State<Loginscreen> {
                     child: Text('Login',style: GoogleFonts.overpass(color: Colors.white,letterSpacing: 1,fontWeight: FontWeight.bold,fontSize: 14.sp)),
                   ),
                 ),
+                SizedBox(height: 20,),
+
+                InkWell(onTap: () async {
+                  String? msg = await FirebaseHelper.firebaseHelper.googleSignIn();
+                  if(msg=='Success')
+                    {
+                      Get.toNamed('/home');
+                      print('$msg');
+                    }
+                  else
+                    {
+                      Get.snackbar('', '$msg');
+                    }
+                },child: Image.asset('assets/img/google.png',height: 50,)),
+
               ],
             ),
           ),
