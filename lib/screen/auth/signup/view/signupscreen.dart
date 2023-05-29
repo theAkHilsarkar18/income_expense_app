@@ -67,6 +67,7 @@ class _SignUPscreenState extends State<SignUPscreen> {
                   String email = txtEmail.text;
                   String password = txtPassword.text;
                   FirebaseHelper.firebaseHelper.signUP(email: email, password: password);
+                  Get.back();
                 },
                 child: Container(
                   margin: EdgeInsets.all(10),

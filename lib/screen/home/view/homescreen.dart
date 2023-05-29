@@ -30,7 +30,7 @@ class _HomescreenState extends State<Homescreen> {
   InsertController insertController = Get.put(InsertController());
   HomeController homeController = Get.put(HomeController());
   TransactionController transactionController = Get.put(TransactionController());
-
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   void initState() {
     // TODO: implement initState
@@ -40,14 +40,51 @@ class _HomescreenState extends State<Homescreen> {
     transactionController.readTransaction();
     transactionController.totalIncome();
     transactionController.totalExpanse();
+    homeController.userDetailFromId();
   }
   @override
   Widget build(BuildContext context) {
     Timer(Duration(seconds: 3), () {
       //homeController.balaceUpdate();
+      homeController.userDetailFromId();
     });
     return SafeArea(
       child: Scaffold(
+        key: _scaffoldKey,
+        drawer: Drawer(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              color: Color(0xffEDE9F0),
+              child: Column(
+                children: [
+                  Obx(
+                    () => CircleAvatar(
+                      radius: 50.sp,
+                      backgroundImage: NetworkImage(homeController.userData['img']==null?'https://i0.wp.com/www.wikiblogon.in/wp-content/uploads/2022/09/9-9.jpg':'${homeController.userData['img']}'),
+                    ),
+                  ),
+                  SizedBox(height: 2.h,),
+                  Obx(
+                    () => Text(homeController.userData['name']==null?'Anushka sen':'${homeController.userData['name']}',
+                        style: GoogleFonts.poppins(
+                            color: Color(0xff31435b),
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12.sp)),
+                  ),
+                  SizedBox(height: 2.h,),
+                  Obx(() =>  Text(homeController.userData['email']==null?'anushkasen0408@gmail.com':'${homeController.userData['email']}',
+                        style: GoogleFonts.poppins(
+                            color: Color(0xff31435b),
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12.sp)),
+                  ),
+
+                ],
+              ),
+            ),
+          ),
+        ),
         backgroundColor: Color(0xffEDE9F0),
         body: Stack(
           children: [
@@ -56,7 +93,9 @@ class _HomescreenState extends State<Homescreen> {
               child: Column(
                 children: [
                   // appbar row
-                  AppBarHomescreen(),
+                  InkWell(onTap: () {
+                    _scaffoldKey.currentState!.openDrawer();
+                  },child: AppBarHomescreen()),
                   SizedBox(
                     height: 2.h,
                   ),

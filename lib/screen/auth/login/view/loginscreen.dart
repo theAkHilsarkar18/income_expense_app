@@ -70,15 +70,15 @@ class _LoginscreenState extends State<Loginscreen> {
                   onTap: () async {
                     String email = txtEmail.text;
                     String password = txtPassword.text;
-                    bool isLogin = await FirebaseHelper.firebaseHelper.signIn(email: email, password: password);
-                    if(isLogin==true)
+                    String login = await FirebaseHelper.firebaseHelper.signIn(email: email, password: password);
+                    if(login=='Success')
                       {
                         Get.snackbar('Login Successful', '',backgroundColor: Colors.green.shade100);
                         Get.offAndToNamed('/home');
                       }
                     else
                       {
-                        Get.snackbar('${FirebaseHelper.firebaseHelper.msg}', '',backgroundColor: Colors.red.shade100);
+                        Get.snackbar('${login}', '',backgroundColor: Colors.red.shade100);
                       }
                   },
                   child: Container(

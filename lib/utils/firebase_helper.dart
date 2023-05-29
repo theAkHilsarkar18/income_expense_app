@@ -16,15 +16,16 @@ class FirebaseHelper {
         .catchError((e) => print("Failed : $e"));
   }
 
-  bool status = false;
-  String msg = '';
 
-  bool signIn({required email, required password}) {
-    firebaseAuth
+  Future<String> signIn({required email, required password}) {
+    return firebaseAuth
         .signInWithEmailAndPassword(email: email, password: password)
-        .then((value) => status = true)
-        .catchError((e) => msg = '${e}');
-    return status;
+        .then((value) {
+          return 'Success';
+        },)
+        .catchError((e){
+          return '$e';
+    });
   }
 
   bool checkUser() {
@@ -43,11 +44,24 @@ class FirebaseHelper {
       idToken: googleSignInAuthentication.idToken,
     );
     await firebaseAuth.signInWithCredential(credential).then((value) => msg='Success').catchError((e)=> msg='$e');
+    userDetails();
     return msg;
   }
 
-  void signOut()
-  {
-
+  Future<void> signOut()
+  async {
+    await firebaseAuth.signOut();
+    await GoogleSignIn().signOut();
   }
+
+  Future<Map> userDetails()
+  async {
+    User? user = await firebaseAuth.currentUser;
+    String? email = user!.email;
+    String? img = user.photoURL;
+    String? name = user.displayName;
+    Map m1 = {'email':email,'img':img,'name':name};
+    return m1;
+  }
+
 }

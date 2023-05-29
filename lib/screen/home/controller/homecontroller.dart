@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:income_expense_app/utils/firebase_helper.dart';
 import 'package:income_expense_app/utils/shrhelper.dart';
 
 import '../../transactionscreen/controller/transaction_controller.dart';
@@ -40,4 +41,14 @@ class HomeController extends GetxController
       }
     }
   }
+
+  RxMap userData = {}.obs;
+  Future<void> userDetailFromId()
+  async {
+    userData.value = await FirebaseHelper.firebaseHelper.userDetails();
+    print(userData);
+  }
+
+  RxString? msg;
+
 }
